@@ -2,8 +2,10 @@
 
 radar <- function(observations){
   
+  # -- scale values (rainfall values are large compared to temp / sunshine)
   coeff_rainfall <- 10
   
+  # -- define y levels
   y_rainfall <- 55
   y_cloud <- 55
   y_sunshine <- 80
@@ -43,7 +45,8 @@ radar <- function(observations){
     # -- years
     geom_vline(
       xintercept = as.numeric(year_separators),
-      color = "grey45") +
+      color = "grey45",
+      alpha = 0.5) +
     
     
     # -- temperatures ----------------------------------------------------------
@@ -52,6 +55,7 @@ radar <- function(observations){
     geom_hline(
       yintercept = median_temp,
       color = "beige",
+      alpha = 0.25,
       linewidth = 0.25) +
     
     # -- temperature (min-max range)
@@ -67,7 +71,7 @@ radar <- function(observations){
       aes(
         y = min_temp,
         colour = min_temp,
-        alpha = median_temp - min_temp),
+        alpha = (median_temp - min_temp) / (median_temp - min(min_temp, na.rm = T))),
       linewidth = 0.25) +
     
     # -- max temperature
@@ -75,7 +79,7 @@ radar <- function(observations){
       aes(
         y = max_temp,
         colour = max_temp,
-        alpha = max_temp - median_temp),
+        alpha = (max_temp - median_temp) / (max(max_temp, na.rm = T) - median_temp)),
       linewidth = 0.25) +
     
     # -- gradient stroke
@@ -90,6 +94,7 @@ radar <- function(observations){
     
     # -- rainfall
     geom_point(
+      data = observations[observations$rain_fall > 0 & !is.na(observations$rain_fall), ],
       aes(
         y = -rain_fall / coeff_rainfall + y_rainfall,
         size = rain_fall,
@@ -97,6 +102,12 @@ radar <- function(observations){
         alpha = rain_fall / max(rain_fall, na.rm = T)), 
       shape = 21,
       fill = "cyan") +
+    
+    # -- scales (stroke around circle)
+    scale_color_gradient(low = "transparent", high = "grey25", na.value = NA) +
+    
+    # -- init new scale
+    ggnewscale::new_scale_colour() +
     
     
     # -- cloud -----------------------------------------------------------------
@@ -110,50 +121,76 @@ radar <- function(observations){
       fill = "grey"
       ) +
     
+    # -- background line
+    geom_hline(
+      yintercept = y_cloud,
+      color = "beige",
+      alpha = 0.25,
+      linewidth = 0.25) +
+    
     
     # -- sunshine --------------------------------------------------------------
     
+    # -- background line
+    geom_hline(
+      yintercept = y_sunshine,
+      color = "beige",
+      alpha = 0.25,
+      linewidth = 0.25) +
+  
     # -- segments
     geom_segment(
+      data = observations[observations$sunshine > 0 & !is.na(observations$sunshine), ],
       aes(
         y = y_sunshine,
         yend = -sunshine + y_sunshine,
-        alpha = sunshine / max(sunshine, na.rm = T) / 10),
-      colour = "orange") +
+        color = sunshine,
+        alpha = sunshine / max(sunshine, na.rm = T)),
+      linewidth = 1) +
       
     # -- points
-    geom_point(aes(y = -sunshine + y_sunshine, 
-                   size = sunshine,
-                   shape = shp, 
-                   fill = sunshine,
-                   alpha = sunshine / max(sunshine, na.rm = T)), 
-               shape = 21,
-               color = "#2d3037") +
+    geom_point(
+      data = observations[observations$sunshine > 0 & !is.na(observations$sunshine), ],
+      aes(
+        y = -sunshine + y_sunshine, 
+        size = sunshine,
+        color = sunshine,
+        fill = sunshine,
+        alpha = sunshine / max(sunshine, na.rm = T) * .25), 
+      shape = 21) +
     
-    # -- Scales ----------------------------------------------------------------
+    # -- color & fill sclaes
+    scale_fill_gradient(low = "transparent", high = "orange") +
+    scale_colour_gradient2(low = "grey", mid = "grey25" , high = "orange",
+                           midpoint = median(observations$sunshine, na.rm = T)) +
+    
+    
+    # -- Legends ---------------------------------------------------------------
+    
+
   
-    # -- color & fill gradients
-    scale_color_gradient(low = "#2d3037", high = "cyan", na.value = NA) +
-    scale_fill_gradient(low = "#2d3037", high = "orange") +
+  
+    # -- Axis & Titles ---------------------------------------------------------
     
-    
-    # -- axis titles
+    # -- Titles
     labs(x = NULL,
          y = NULL) +
     
-    # -- axis ticks
+    # -- Y limits (arbitrary)
     scale_y_continuous(limits = c(0, y_limit)) +
-    
-    # -- theme
+  
+      
+    # -- Theme -----------------------------------------------------------------
+  
     theme(
       
       # -- background
-      #panel.background = element_blank(),
-      #plot.background = element_blank(),
+      panel.background = element_blank(),
+      plot.background = element_blank(),
       panel.grid = element_blank(),
       
-      panel.background = element_rect(fill = "#2d3037"),
-      plot.background =  element_rect(fill = "#2d3037"),
+      #panel.background = element_rect(fill = "#2d3037"),
+      #plot.background =  element_rect(fill = "#2d3037"),
       
     
       # -- legend
@@ -168,10 +205,20 @@ radar <- function(observations){
       axis.ticks.y = element_blank(),
       axis.text = element_text(colour = "grey45")
       
-    )
+    ) +
     
-    #coord_polar()
+    # -- make it polar
+    coord_polar() +
   
+    annotate(geom = 'text', 
+             label = '▶', 
+             x = max(observations$date), 
+             y = y_limit, 
+             hjust = 0, 
+             vjust = 0,
+             color = "grey",
+             alpha = .5,
+             size = 6)
 }
 
-print(radar(observations_df))
+# print(radar(observations_df))
