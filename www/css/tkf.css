@@ -1,0 +1,59 @@
+
+
+
+/* -- Color Section --------------------------------------------------------- */
+
+:root {
+
+  /* grey */
+  --grey-dark: #2d3037;
+  --grey-mid-high: #393e44;
+  --grey-mid-low: #494c51;
+  --grey-light: #75787d;
+
+
+  /* color */
+  --color-light: #f0c197;
+  --color-dark: #ce905d;
+
+}
+
+
+/* -- Body Section ---------------------------------------------------------- */
+
+
+.header {
+  
+  font-size:36pt;
+  font-weight: bold;
+  
+}
+
+
+.footer {
+  
+  font-size:8pt;
+  
+  margin-left: 20px;
+  margin-bottom: 20px;
+  
+}
+
+.mycard {
+  
+  background: var(--grey-mid-high);
+  
+}
+
+
+.obs {
+
+  font-size: 10pt;
+  
+  background: rgb(19,19,19);
+  background: linear-gradient(45deg, rgba(19,19,19,1) 0%, rgba(36,36,36,1) 50%, rgba(41,41,41,1) 100%); 
+  
+  border-radius: 10px;
+  border: solid 1px #F8EAD3;
+  
+}
