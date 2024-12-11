@@ -19,9 +19,7 @@ obs_summary_ui <- function(id){
       p("The observation dashboard explores the weather data as collected from the source.", br(),
       "The Australian Government - Bureau of Meteorology (BOM)"),
       p("The data are downloaded daily from the BOM website.", br(),
-      textOutput(ns("dataset_summary"), inline = TRUE)),
-      p("Tune the date range:"),
-      uiOutput(ns("date_slider"))),
+      textOutput(ns("dataset_summary"), inline = TRUE))),
     
     card(
       class = "mycard",

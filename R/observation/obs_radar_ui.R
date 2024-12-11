@@ -27,6 +27,9 @@ obs_radar_ui <- function(id){
         tags$li("Cloud 9am / 3pm"),
         tags$li("Sunshine")),
       
-      "The stripes in the background shows austral winter & summer seasons"))
+      "Daily observations are projected clockwise around the radial plot.", br(),
+      "The stripes in the background show austral winter & summer seasons",
+      
+      tags$i("Computation time: ", textOutput(ns("benchmark_radar"), inline = T), "ms")))
   
 }
