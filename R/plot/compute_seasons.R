@@ -1,10 +1,10 @@
 
 
 compute_seasons <- function(observations){
-  
-  # -- get years from df
+
+  # -- get years & extend range by 1 (on each side)
   years <- as.numeric(unique(format(observations$date, "%Y")))
-  years <- c(years, max(years) + 1)
+  years <- sort(c(min(years) - 1, years, max(years) + 1))
   
   # -- compute summers
   summer <- data.frame(name = "summer",
@@ -19,11 +19,16 @@ compute_seasons <- function(observations){
   # -- merge
   seasons <- rbind(winter, summer)
   
-  # -- fix start / end
+  # -- filter out seasons not overlapping with data
   seasons <- seasons[order(seasons$start), ]
-  seasons <- seasons[seasons$start >= min(observations$date), ]
+  seasons <- seasons[seasons$end >= min(observations$date), ]
   seasons <- seasons[seasons$start <= max(observations$date), ]
-  seasons[seasons$end > max(observations$date), ]$end <- max(observations$date)
+  
+  # -- fix start / end dates
+  if(any(seasons$start < min(observations$date)))
+    seasons[1, 'start'] <- min(observations$date)
+  if(any(seasons$end > max(observations$date)))
+    seasons[nrow(seasons), 'end'] <- max(observations$date)
   
   # -- return
   seasons
