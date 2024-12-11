@@ -37,6 +37,9 @@ page_navbar(
             fluidRow(
               obs_summary_ui("obs")),
             
+            fluidRow(
+              obs_selection_ui("obs")),
+            
             p(" "),
             
             fluidRow(

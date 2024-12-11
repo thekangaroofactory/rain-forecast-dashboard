@@ -19,8 +19,15 @@ observation_Server <- function(id, observations) {
     ns <- session$ns
     
     
+    # -- reactive objects
+    benchmark_radar <- reactiveVal(NULL)
+    benchmark_sunshine <- reactiveVal(NULL)
+    
+    
+    # -- compute dataset stats
     dataset_date_min <- min(observations$date)
     dataset_date_max <- max(observations$date)
+    
     
     # --------------------------------------------------------------------------
     # Select data
@@ -57,29 +64,27 @@ observation_Server <- function(id, observations) {
       observation_card(observations[3, ]))
     
     # -- date slider
-    output$date_slider <- renderUI(
+    output$date_range <- renderUI(
       div(style="display:inline-block",
       sliderInput(inputId = ns("date_slider"),
-                  label = "Range",
+                  label = "Date range:",
                   min = dataset_date_min,
                   max = dataset_date_max,
                   value = c(as.Date("2024-01-01"), dataset_date_max)),
       
+      br(),
+      
       actionButton(inputId = ns("previous_year"),
-                   label = icon(name = "backward"),
-                   width = "20%"),
+                   label = icon(name = "backward")),
       
       actionButton(inputId = ns("next_year"),
-                   label = icon(name = "forward"),
-                   width = "20%"),
+                   label = icon(name = "forward")),
       
       actionButton(inputId = ns("this_year"),
-                   label = "This year",
-                   width = "20%"),
+                   label = "This year"),
       
       actionButton(inputId = ns("all_years"),
-                   label = "All",
-                   width = "20%")
+                   label = "All")
       
       ))
     
@@ -139,26 +144,67 @@ observation_Server <- function(id, observations) {
     })
     
     
+    # --------------------------------------------------------------------------
+    # Radar plot section
+    # --------------------------------------------------------------------------
+    
+    # -- benchmark
+    output$benchmark_radar <- renderText(benchmark_radar())
+    
     # -- radar plot
-    output$p_radar <- renderPlot(
+    output$p_radar <- renderPlot({
+      
+      # -- benchmark
+      ts_before <- ktools::getTimestamp()
       
       # -- check data size
-      if(nrow(selected_observations()) > 0)
-        radar(selected_observations()),
+      p <- if(nrow(selected_observations()) > 0)
+        radar(selected_observations())
       
-      bg = "transparent")
+      # -- benchmark
+      ts_after <- ktools::getTimestamp()
+      benchmark_radar(as.numeric(ts_after - ts_before))
+      cat("Radar computation time =", benchmark_radar(), "ms \n")
+      
+      # -- return
+      p
+      
+    },
     
+    bg = "transparent")
+    
+    
+    # --------------------------------------------------------------------------
+    # Sunshine plot section
+    # --------------------------------------------------------------------------
+    
+    # -- benchmark
+    output$benchmark_sunshine <- renderText(benchmark_sunshine())
     
     # -- sunshine plot
-    output$p_sunshine <- renderPlot(
+    output$p_sunshine <- renderPlot({
+      
+      # -- benchmark
+      ts_before <- ktools::getTimestamp()
       
       # -- check data size
-      if(nrow(selected_observations()) > 0)
-        sunshine(selected_observations()), 
+      p <- if(nrow(selected_observations()) > 0)
+        sunshine(selected_observations())
       
-      bg = "transparent")
+      # -- benchmark
+      ts_after <- ktools::getTimestamp()
+      benchmark_sunshine(as.numeric(ts_after - ts_before))
+      cat("Sunshine computation time =", benchmark_sunshine(), "ms \n")
+      
+      # -- return
+      p
+      
+    }, 
+    
+    bg = "transparent")
     
     
+    # --------------------------------------------------------------------------
     # -- table
     #output$obs_table <- DT::renderDT(observations, fillContainer = TRUE)
     
