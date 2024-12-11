@@ -39,6 +39,17 @@
   
 }
 
+
+.btn {
+  
+  width: 20%;
+  max-width: 200px;
+  
+  border-radius: 50px;
+  
+}
+
+
 .mycard {
   
   background: var(--grey-mid-high);
