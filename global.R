@@ -6,9 +6,10 @@ library(magrittr)
 
 library(ggplot2)
 library(ggnewscale)
+library(ggtext)
+library(geomtextpath)
 
 library(see)
-library(ggtext)
 library(showtext)
 
 
