@@ -6,11 +6,13 @@ radar <- function(observations){
   coeff_rainfall <- 10
   
   # -- define y levels
+  y_rainfall_legend <- 40
   y_rainfall <- 55
   y_cloud <- 55
   y_sunshine <- 80
   y_seasons <- 90
-  y_limit <- 95
+  y_seasons_text <- 91
+  y_limit <- 92
   
   
   # -- compute helper values
@@ -42,11 +44,60 @@ radar <- function(observations){
         ymax = y_seasons),
       alpha = 0.25) +
   
-    # -- years
-    geom_vline(
-      xintercept = as.numeric(year_separators),
+    # -- winters & summers text
+    geom_textpath(
+      data = head(seasons, n = 2),
+      inherit.aes = FALSE,
+      aes(
+        x = end - (end - start)/2,
+        y = y_seasons_text,
+        label = name),
+      hjust = 0.5,
+      vjust = 1,
+      #size = 5,
+      color = "grey90",
+      alpha = 0.25) +
+    
+    # -- year separators
+    geom_segment(
+      data = as.data.frame(year_separators),
+      x = as.numeric(year_separators),
+      y = 0,
+      yend = y_seasons,
       color = "grey45",
       alpha = 0.5) +
+    
+    # -- start point
+    geom_point(
+      data = data.frame(x = min(observations$date),
+                        y = y_seasons_text),
+      aes(
+        x = x,
+        y = y),
+      size = 1,
+      color = "grey45") +
+    
+    # -- start arrow
+    # xend is extended by 7.5°
+    geom_segment(
+      data = data.frame(x = min(observations$date),
+                        y = y_seasons_text),
+      aes(
+        x = x,
+        xend = x + as.numeric(max(observations$date) - min(observations$date) + 1) / 360 * 7.5,
+        y = y),
+      arrow = arrow(angle = 30, length = unit(2.5, "pt")),
+      color = "grey45") +
+    
+    # -- central point
+    geom_point(
+      data = data.frame(x = min(observations$date),
+                        y = 0),
+      aes(
+        x = x,
+        y = y),
+      size = 1,
+      color = "grey45") +
     
     
     # -- temperatures ----------------------------------------------------------
@@ -74,6 +125,18 @@ radar <- function(observations){
         alpha = (median_temp - min_temp) / (median_temp - min(min_temp, na.rm = T))),
       linewidth = 0.25) +
     
+    # -- min temperature text
+    geom_text(
+      data = observations[which.min(observations$min_temp), ],
+      aes(
+        x = date,
+        y = min_temp - 2,
+        label = paste(min_temp, "°C")),
+      vjust = 0.5,
+      size = 3,
+      color = "cyan",
+      alpha = 0.5) +
+    
     # -- max temperature
     geom_line(
       aes(
@@ -81,6 +144,18 @@ radar <- function(observations){
         colour = max_temp,
         alpha = (max_temp - median_temp) / (max(max_temp, na.rm = T) - median_temp)),
       linewidth = 0.25) +
+    
+    # -- max temperature text
+    geom_text(
+      data = observations[which.max(observations$max_temp), ],
+      aes(
+        x = date,
+        y = max_temp + 2,
+        label = paste(max_temp, "°C")),
+      vjust = 0.5,
+      size = 3,
+      color = "orange",
+      alpha = 0.5) +
     
     # -- gradient stroke
     scale_colour_gradient2(low = "cyan", mid = "beige" , high = "orange",
@@ -103,6 +178,32 @@ radar <- function(observations){
       shape = 21,
       fill = "cyan") +
     
+    # -- max rainfall
+    # x gets an additional 15° & fixed y
+    geom_text(
+      data = observations[which.max(observations$rain_fall), ],
+      aes(
+        x = date + as.numeric(max(observations$date) - min(observations$date) + 1) / 360 * 15,
+        label = paste(rain_fall, "mm")),
+      y = y_rainfall_legend,
+      vjust = 0.5,
+      size = 3,
+      color = "cyan",
+      alpha = 0.5) +
+    
+    # -- max rainfall tick
+    # x gets an additional 10° & fixed y
+    geom_segment(
+      data = observations[which.max(observations$rain_fall), ], 
+      aes(
+        x = date + as.numeric(max(observations$date) - min(observations$date) + 1) / 360 * 10,
+        xend = date,
+        yend = -rain_fall / coeff_rainfall + y_rainfall),
+      y = y_rainfall_legend,
+      linewidth = 0.5,
+      color = "cyan",
+      alpha = 0.25) +
+  
     # -- scales (stroke around circle)
     scale_color_gradient(low = "transparent", high = "grey25", na.value = NA) +
     
@@ -159,17 +260,24 @@ radar <- function(observations){
         alpha = sunshine / max(sunshine, na.rm = T) * .25), 
       shape = 21) +
     
-    # -- color & fill sclaes
+    # -- max sunshine text
+    geom_text(
+      data = observations[which.max(observations$sunshine), ],
+      aes(
+        x = date,
+        y = -sunshine + y_sunshine - 5,
+        label = paste(sunshine, "h")),
+      vjust = 0.5,
+      size = 3,
+      color = "orange",
+      alpha = 0.5) +
+    
+    # -- color & fill scales
     scale_fill_gradient(low = "transparent", high = "orange") +
     scale_colour_gradient2(low = "grey", mid = "grey25" , high = "orange",
                            midpoint = median(observations$sunshine, na.rm = T)) +
-    
-    
-    # -- Legends ---------------------------------------------------------------
-    
-
   
-  
+    
     # -- Axis & Titles ---------------------------------------------------------
     
     # -- Titles
@@ -208,17 +316,9 @@ radar <- function(observations){
     ) +
     
     # -- make it polar
-    coord_polar() +
-  
-    annotate(geom = 'text', 
-             label = '▶', 
-             x = max(observations$date), 
-             y = y_limit, 
-             hjust = 0, 
-             vjust = 0,
-             color = "grey",
-             alpha = .5,
-             size = 6)
+    # coord_polar()
+    coord_curvedpolar()
+    
 }
 
-# print(radar(observations_df))
+#print(radar(observations_df))

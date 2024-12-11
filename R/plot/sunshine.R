@@ -2,6 +2,13 @@
 
 sunshine <- function(data, family = ""){
 
+  # -- params
+  color_text <- "grey45"
+  
+  
+  # -- filter out rows with sunshine NA
+  data <- data[!is.na(data$sunshine), ]
+  
   # -- build stats (to order)
   stats <- data %>%
     group_by(month) %>%
@@ -11,11 +18,11 @@ sunshine <- function(data, family = ""){
     arrange(., -median) %>%
     mutate(name = month.name[month])
   
+  
   # -- get max sunshine
   maxday <- data[!is.na(data$sunshine) & data$sunshine == max(data$sunshine, na.rm = T), ]
   maxvalue <- unique(maxday$sunshine)
   maxmonth <- names(which.max(table(maxday$month)))
-  rm(maxday)
   
   # -- build color palette
   color_palette <- c("#9d9d9d",
@@ -31,9 +38,10 @@ sunshine <- function(data, family = ""){
                      "#ff9330",
                      "#ff9900")
   
+  # -- set names (months)
   names(color_palette) <- rev(stats$month)
   
-  # Add Google Font (e.g., Roboto)
+  # -- Add Google Font
   font_add_google(name = "Lexend")
   
   # -- enable custom fonts
@@ -50,8 +58,9 @@ sunshine <- function(data, family = ""){
     geom_hline(
       yintercept = c(5, 10),
       linetype = "dotted",
-      alpha = 0.2) +
+      color = color_text) +
     
+    # -- background violin area
     geom_violinhalf(
       position = position_nudge(x = -0.05),
       flip = TRUE,
@@ -73,10 +82,10 @@ sunshine <- function(data, family = ""){
       nudge_x = 0.2,
       family = family,
       fontface = "bold",
-      size = 8,
-      alpha = 0.2) +
+      size = 6,
+      color = color_text) +
     
-    # -- Legend: sunshine
+    # -- Legend: median sunshine
     geom_text(
       data = stats,
       aes(x = month,
@@ -87,8 +96,8 @@ sunshine <- function(data, family = ""){
       nudge_x = 0.25,
       family = family,
       fontface = "bold",
-      size = 4.5,
-      alpha = 0.35) +
+      size = 4,
+      color = color_text) +
     
     # -- Legend: max sunshine
     geom_text(
@@ -104,76 +113,11 @@ sunshine <- function(data, family = ""){
       fontface = "plain",
       size = 3.5,
       lineheight = 0.75,
-      alpha = 0.35) +
-    
-    # -- title
-    # geom_textbox(
-    #   data = data.frame(
-    #     x = stats$month[1],
-    #     y = -8,
-    #     label = "<b style='font-size:30pt'>sunshine in</b><br>
-    #     <b style='font-size:72pt;color:#fe8d5b;'>Sydney</b><br>
-    #     <p style='font-size:10pt;'>Data visualization by Philippe Peret.</p>",
-    #     month = "06"),
-    #   aes(x = x,
-    #       y = y,
-    #       label = label),
-    #   hjust = 0,
-    #   vjust = 1,
-    #   width = unit(200, "points"),
-    #   family = family,
-    #   size = 4,
-    #   box.colour = NA,
-    #   fill = NA) +
-    
-    # -- description
-    # geom_textbox(
-    #   data = data.frame(
-    #     x = stats$month[7],
-    #     y = -8,
-    #     label = "<p style='font-size:14pt;'>Daily distribution<br><span style='font-size:9pt;'>(hours per day)</span></p>
-    #     <p style='font-size:10pt;'>Horizontal lines show the range of values<br>
-    #     Out of all data<br>
-    #     - 50% are inside the boxes<br>
-    #     - 50% are on each sides of the vertical lines (median)<br>
-    #     - 25% are above or below the limits of the boxes<br></p>
-    #     <p style='font-size:10pt;'>Shadows display the distribution of values<br>
-    #     along the range</p>",
-    #     month = "06"),
-    #   aes(x = x,
-    #       y = y,
-    #       label = label),
-    #   hjust = 0,
-    #   vjust = 0.5,
-    #   width = unit(275, "points"),
-    #   family = family,
-    #   size = 4,
-    #   box.colour = NA,
-    #   fill = NA) +
-    
-    # -- dataset
-    # geom_textbox(
-    #   data = data.frame(
-    #     x = stats$month[12],
-    #     y = -8,
-    #     label = paste0("<i style='font-size:9pt;color:grey40;'>Source: BOM<br>
-    #     The dataset contains", nrow(data), " data<br>
-    #                    (from ", min(data$date), " to ", max(data$date), ")</i>"),
-    #     month = "06"),
-    #   aes(x = x,
-    #       y = y,
-    #       label = label),
-    #   hjust = 0,
-    #   vjust = 0.5,
-    #   width = unit(250, "points"),
-    #   family = family,
-    #   box.colour = NA,
-    #   fill = NA) +
+      color = color_text) +
     
     # -- reorder month
-    scale_x_discrete(limits = rev(stats$month)) +
-    scale_y_continuous(#limits = c(-8, NA),
-                       breaks = c(0, 5, 10),) +
+    scale_x_discrete(limits = rev(stats$month), expand = c(0.07, 0)) +
+    scale_y_continuous(breaks = c(0, 5, 10),) +
     
     # -- colors
     scale_fill_manual(values = color_palette) +
@@ -186,22 +130,28 @@ sunshine <- function(data, family = ""){
       
       plot.margin = margin(t = 20,
                            b = 10),
+
+      # -- backgrounds & grid
       
+      #panel.background = element_rect(fill = "#2d3037"),
+      #plot.background =  element_rect(fill = "#2d3037"),
+      
+      panel.background = element_blank(),
+      plot.background = element_blank(),
+      panel.grid = element_blank(),
+            
+      # -- legend
       legend.position = "none",
       
+      # -- axis
       axis.title.y = element_blank(),
       axis.text.y = element_blank(),
       axis.ticks.y = element_blank(),
       axis.title.x = element_blank(),
       axis.text.x = element_text(family = family),
       
-      panel.background = element_blank(),
-      plot.background = element_blank(),
-      
-      #f7e6ca
-      
-      panel.grid = element_blank()
-      
       )
   
 }
+
+#print(sunshine(observations_df))
