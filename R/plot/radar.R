@@ -139,6 +139,7 @@ radar <- function(observations){
     
     # -- max temperature
     geom_line(
+      data = observations[!is.na(observations$max_temp), ],
       aes(
         y = max_temp,
         colour = max_temp,
