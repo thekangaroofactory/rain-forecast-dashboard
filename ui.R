@@ -10,8 +10,11 @@ library(bslib)
 page_navbar(
   
   # -- include css
-  tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css")),
+  # tags$head(
+  #   tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css")),
+  
+  # -- header / css
+  header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css"),
   
   # -- theme
   theme = bs_theme(
@@ -24,7 +27,6 @@ page_navbar(
   
   # -- title
   title = "Rain Forecast",
-  
   
   # -- portfolio
   nav_panel(title = "Observations", 
@@ -46,33 +48,21 @@ page_navbar(
               obs_radar_ui("obs")),
             
             fluidRow(
-              obs_sunshine_ui("obs"))),
+              obs_sunshine_ui("obs")),
+            
+            p(class = "footer", "qksjqksjld")),
   
   
   # -- profile
   # insert ui & outputs + backend server logic (module)
   nav_panel(title = "Predictions", 
-            p("My profile goes here."),
             
-            uiOutput("date_slider"),
+            fluidRow(
+              pre_header_ui("pre")),
             
-            layout_columns(
-              col_widths = c(3, 3),
-              
-              value_box(
-                title = "Predictions",
-                theme = "bg-gradient-yellow-orange",
-                value = uiOutput("predict_nb")),
-              
-              value_box(
-                title = "Accurate",
-                theme = "bg-gradient-yellow-orange",
-                value = uiOutput("predict_accurate")),
-              
-              value_box(
-                title = "Accuracy",
-                theme = "bg-gradient-yellow-orange",
-                value = uiOutput("predict_accuracy")))),
+            pre_selection_ui("pre"),
+            
+            ),
   
   
   # -- contact
@@ -107,6 +97,7 @@ page_navbar(
                 
                 tags$a(href = "https://orcid.org/0009-0003-9666-7490",
                        target = "_blank",
-                       "ORCID")))),
+                       "ORCID"))))
   
 )
+
