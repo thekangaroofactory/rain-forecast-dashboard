@@ -152,26 +152,29 @@ observation_Server <- function(id, observations) {
     output$benchmark_radar <- renderText(benchmark_radar())
     
     # -- radar plot
-    output$p_radar <- renderPlot({
-      
-      # -- benchmark
-      ts_before <- ktools::getTimestamp()
+    output$p_radar <- renderPlot(
       
       # -- check data size
-      p <- if(nrow(selected_observations()) > 0)
-        radar(selected_observations())
-      
-      # -- benchmark
-      ts_after <- ktools::getTimestamp()
-      benchmark_radar(as.numeric(ts_after - ts_before))
-      cat("Radar computation time =", benchmark_radar(), "ms \n")
-      
-      # -- return
-      p
-      
-    },
-    
-    bg = "transparent")
+      if(nrow(selected_observations()) > 0){
+        
+        # -- benchmark
+        ts_before <- ktools::getTimestamp()
+        
+        # -- build plot
+        p <- radar(selected_observations())
+        
+        # -- benchmark
+        ts_after <- ktools::getTimestamp()
+        benchmark_radar(as.numeric(ts_after - ts_before))
+        cat("Radar computation time =", benchmark_radar(), "ms \n")
+        
+        # -- return
+        tryCatch(
+          print(p),
+          error = function(e) default_p(message = "Failed to build the plot:\nthe date range is too short.",
+                                        size = 4,
+                                        color = "grey"))}, 
+      bg = "transparent")
     
     
     # --------------------------------------------------------------------------
@@ -182,26 +185,26 @@ observation_Server <- function(id, observations) {
     output$benchmark_sunshine <- renderText(benchmark_sunshine())
     
     # -- sunshine plot
-    output$p_sunshine <- renderPlot({
-      
-      # -- benchmark
-      ts_before <- ktools::getTimestamp()
+    output$p_sunshine <- renderPlot(
       
       # -- check data size
-      p <- if(nrow(selected_observations()) > 0)
-        sunshine(selected_observations())
+      if(nrow(selected_observations()) > 0){
+        
+        # -- benchmark
+        ts_before <- ktools::getTimestamp()
+        
+        # -- build plot
+        p <- sunshine(selected_observations())
+        
+        # -- benchmark
+        ts_after <- ktools::getTimestamp()
+        benchmark_sunshine(as.numeric(ts_after - ts_before))
+        cat("Sunshine computation time =", benchmark_sunshine(), "ms \n")
+        
+        # -- return
+        p}, 
       
-      # -- benchmark
-      ts_after <- ktools::getTimestamp()
-      benchmark_sunshine(as.numeric(ts_after - ts_before))
-      cat("Sunshine computation time =", benchmark_sunshine(), "ms \n")
-      
-      # -- return
-      p
-      
-    }, 
-    
-    bg = "transparent")
+      bg = "transparent")
     
     
     # --------------------------------------------------------------------------
