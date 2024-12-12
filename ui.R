@@ -9,6 +9,9 @@ library(bslib)
 # Define UI for application
 page_navbar(
   
+  fillable = FALSE,
+  footer = "my footer here",
+  
   # -- include css
   # tags$head(
   #   tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css")),
@@ -28,8 +31,8 @@ page_navbar(
   # -- title
   title = "Rain Forecast",
   
-  # -- portfolio
-  nav_panel(title = "Observations", 
+  # -- portfolio*
+  nav_panel(title = "Observations",
             
             fluidRow(
               obs_header_ui("obs")),
