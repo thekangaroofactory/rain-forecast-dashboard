@@ -46,7 +46,13 @@ radar <- function(observations){
   
     # -- winters & summers text
     geom_textpath(
-      data = head(seasons, n = 2),
+      data =   
+        # -- check size
+        if(nrow(seasons) == 1)
+          seasons <- rbind(seasons, data.frame(name = " ",
+                                               start = seasons$start + 5,
+                                               end = seasons$end))
+        else head(seasons, n = 2),
       inherit.aes = FALSE,
       aes(
         x = end - (end - start)/2,
@@ -184,7 +190,7 @@ radar <- function(observations){
     geom_text(
       data = observations[which.max(observations$rain_fall), ],
       aes(
-        x = date + as.numeric(max(observations$date) - min(observations$date) + 1) / 360 * 15,
+        x = date + as.numeric(max(date) - min(date) + 1) / 360 * 15,
         label = paste(rain_fall, "mm")),
       y = y_rainfall_legend,
       vjust = 0.5,
@@ -197,7 +203,7 @@ radar <- function(observations){
     geom_segment(
       data = observations[which.max(observations$rain_fall), ], 
       aes(
-        x = date + as.numeric(max(observations$date) - min(observations$date) + 1) / 360 * 10,
+        x = date + as.numeric(max(date) - min(date) + 1) / 360 * 10,
         xend = date,
         yend = -rain_fall / coeff_rainfall + y_rainfall),
       y = y_rainfall_legend,
