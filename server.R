@@ -13,7 +13,14 @@ function(input, output, session) {
   
   # -- get available observations & transform
   observations <- call_api(resource = "observations")
-  observations <- obs_datamart(observations)
+  if(!is.null(observations))
+    observations <- obs_datamart(observations)
+  else
+    showModal(
+      modalDialog(
+        title = "Data Error",
+        p("The was a problem while retrieving the data from the database."),
+        p("All values & plots will be empty.")))
   
   observations_df <<- observations
   
