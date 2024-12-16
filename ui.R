@@ -31,7 +31,7 @@ page_navbar(
   # -- title
   title = "Rain Forecast",
   
-  # -- portfolio*
+  # -- Observations
   nav_panel(title = "Observations",
             
             fluidRow(
@@ -56,19 +56,40 @@ page_navbar(
             p(class = "footer", "qksjqksjld")),
   
   
-  # -- profile
-  # insert ui & outputs + backend server logic (module)
+  # -- Predictions
   nav_panel(title = "Predictions", 
             
             fluidRow(
               pre_header_ui("pre")),
             
+            fluidRow(
+              p("Some predictions may be filtered in case it is not possible to check their accuracy.", br(),
+                "This happens when the rainfall value is missing in the corresponding observation.")),
+            
             pre_selection_ui("pre"),
+            
+            pre_accuracy_ui("pre"),
+            
+            pre_confusion_ui("pre"),
+            
+            pre_kpis_ui("pre")
             
             ),
   
   
-  # -- contact
+  # -- Models
+  nav_panel(title = "Models", 
+            
+            fluidRow(
+              h2("Models performances goes here")),
+            
+            fluidRow(
+              p("créer un comparatif des différents models PR / ROC")),
+            
+  ),
+  
+  
+  # -- About
   nav_panel(title = "About", 
             
             card(
