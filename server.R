@@ -26,9 +26,8 @@ function(input, output, session) {
   
   # -- get predictions
   predictions <- call_api(resource = "predictions")
-  predictions$date <- as.Date(predictions$date)
-  predictions$expect_rain <- predictions$raw_prediction >= 0.28
-  predictions$accurate <- predictions$expect_rain == observations[match(predictions$date, observations$date), ]$rain_tomorrow
+  if(!is.null(predictions))
+    predictions <- pre_datamart(predictions, observations)
   
   
   # ----------------------------------------------------------------------------
