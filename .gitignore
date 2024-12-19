@@ -48,5 +48,11 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-# -- manual adds ----
+# -- manual adds ---------------------------------------------------------------
+
+# screenshots
 R/*.png
+
+# Docker compose & env files (local usage)
+compose.yml
+*.env
