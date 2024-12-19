@@ -7,11 +7,7 @@
 page_navbar(
   
   fillable = FALSE,
-  footer = "my footer here",
-  
-  # -- include css
-  # tags$head(
-  #   tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css")),
+  footer = p(style = "font-size:9pt;", "© 2024 Philippe Peret"),
   
   # -- header / css
   header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css"),
@@ -48,9 +44,7 @@ page_navbar(
               obs_radar_ui("obs")),
             
             fluidRow(
-              obs_sunshine_ui("obs")),
-            
-            p(class = "footer", "qksjqksjld")),
+              obs_sunshine_ui("obs"))),
   
   
   # -- Predictions
@@ -69,56 +63,42 @@ page_navbar(
             
             pre_confusion_ui("pre"),
             
-            pre_kpis_ui("pre")
-            
-            ),
+            pre_kpis_ui("pre")),
   
   
   # -- Models
-  nav_panel(title = "Models", 
-            
-            fluidRow(
-              h2("Models performances goes here")),
-            
-            fluidRow(
-              p("créer un comparatif des différents models PR / ROC")),
-            
-  ),
+  # nav_panel(title = "Models", 
+  #           
+  #           fluidRow(
+  #             h2("Models performances goes here")),
+  #           
+  #           fluidRow(
+  #             p("créer un comparatif des différents models PR / ROC"))),
   
   
   # -- About
   nav_panel(title = "About", 
             
-            card(
-              
-              # -- header
-              card_header(h2("About the Project")),
-              
-              # -- body
-              card_body(
-                "The original dataset is provided by the Australian - Bureau of Meteorology (BOM):", br(),
-                tags$a(href = "http://www.bom.gov.au/climate/data/", target = "_blank", "http://www.bom.gov.au/climate/data/"),
-                "It contains 140000+ examples, captured between 2008 and 2017 in different locations accross Australia, with daily observations")),
-              
-            card(
-
-              # -- header
-              card_header(h2("Contact")),
-              
-              card_body(
-                
-                tags$a(href = "https://www.linkedin.com/in/philippeperet/", 
-                       target = "_blank",
-                       "LinkedIn"),
-                
-                
-                tags$a(href = "https://github.com/thekangaroofactory",
-                       target = "_blank",
-                       "GitHub"),
-                
-                tags$a(href = "https://orcid.org/0009-0003-9666-7490",
-                       target = "_blank",
-                       "ORCID"))))
+            # -- project
+            h2("About the Project"),
+            p("The original dataset is provided by the Australian - Bureau of Meteorology (BOM):", br(),
+              tags$a(href = "http://www.bom.gov.au/climate/data/", target = "_blank", "http://www.bom.gov.au/climate/data/"), br(),
+              "It contains 140000+ examples, captured between 2008 and 2017 in different locations accross Australia, with daily observations"),
+            
+            # -- contact  
+            h2("Contact"),
+            tags$a(href = "https://www.linkedin.com/in/philippeperet/", 
+                   target = "_blank",
+                   "LinkedIn"),
+            
+            
+            tags$a(href = "https://github.com/thekangaroofactory",
+                   target = "_blank",
+                   "GitHub"),
+            
+            tags$a(href = "https://orcid.org/0009-0003-9666-7490",
+                   target = "_blank",
+                   "ORCID")), br(),
   
 )
 
