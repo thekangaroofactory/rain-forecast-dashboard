@@ -8,6 +8,7 @@ library(ggplot2)
 
 
 # -- function called with pkg::fun
+#‘RCurl’
 # library(ggforce)
 # library(geomtextpath)
 # library(see)
