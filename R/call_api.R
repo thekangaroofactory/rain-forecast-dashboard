@@ -3,20 +3,22 @@
 call_api <- function(resource = "observations", station = "IDCJDW2124", start, end){
   
   # -- build url
-  api_url <- paste0("http://127.0.0.1:4479", "/api/v1/", resource)
+  api_url <- paste0(WS_URL, WS_BASE_ROUTE, resource)
+  
+  # -- init
+  # tryCatch may not raise error for example when env variables are not set
+  response <- NULL
   
   # -- call api
   tryCatch({
     response <- RCurl::getURL(api_url)
     cat("API call response size =", object.size(response) ,"\n")},
     
-    error = function(e) message(e$message),
-    
-    finally = response <- NULL)
+    error = function(e) {
+      message(e$message)
+      return(NULL)})
 
   # -- return
-  if(!is.null(response))
-    jsonlite::fromJSON(response)
-  else NULL
+  jsonlite::fromJSON(response)
   
 }

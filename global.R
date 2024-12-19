@@ -1,25 +1,34 @@
 
 
-# -- load dependencies
+# -- Load dependencies
 library(shiny)
 library(bslib)
-
 library(dplyr)
-library(magrittr)
-
 library(ggplot2)
-library(ggforce)
-library(ggnewscale)
-library(ggtext)
-library(geomtextpath)
 
-library(see)
-library(showtext)
 
-# -- debug
+# -- function called with pkg::fun
+# library(ggforce)
+# library(geomtextpath)
+# library(see)
+# library(showtext)
+
+
+# -- to be removed!? (maybe used in the big data viz with legends & all)
+# library(ggnewscale)
+# library(ggtext)
+
+
+# -- Debug
 DEBUG <- FALSE
 
-# -- init & source code
+
+# -- Set environment
+WS_URL <- Sys.getenv("WS_URL")
+WS_BASE_ROUTE <- Sys.getenv("WS_BASE_ROUTE")
+
+
+# -- Init & source code
 for(nm in list.files("R", pattern = ".R", full.names = T, recursive = T))
   source(nm)
 rm(nm)
