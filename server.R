@@ -3,8 +3,6 @@
 # This is the server logic of a Shiny web application.
 # --
 
-library(shiny)
-
 # Define server logic
 function(input, output, session) {
   
@@ -22,7 +20,9 @@ function(input, output, session) {
         p("The was a problem while retrieving the data from the database."),
         p("All values & plots will be empty.")))
   
-  observations_df <<- observations
+  # -- debug
+  if(DEBUG)
+    observations_df <<- observations
   
   # -- get predictions
   predictions <- call_api(resource = "predictions")
