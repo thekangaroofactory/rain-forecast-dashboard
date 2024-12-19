@@ -4,6 +4,7 @@ call_api <- function(resource = "observations", station = "IDCJDW2124", start, e
   
   # -- build url
   api_url <- paste0(WS_URL, WS_BASE_ROUTE, resource)
+  cat("API url =", api_url, "\n")
   
   # -- init
   # tryCatch may not raise error for example when env variables are not set
