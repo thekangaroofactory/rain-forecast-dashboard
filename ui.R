@@ -3,9 +3,6 @@
 # This is the user-interface definition of a Shiny web application.
 # --
 
-library(shiny)
-library(bslib)
-
 # Define UI for application
 page_navbar(
   
