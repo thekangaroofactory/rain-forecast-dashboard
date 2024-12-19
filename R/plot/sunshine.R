@@ -5,25 +5,6 @@ sunshine <- function(data, family = ""){
   # -- params
   color_text <- "grey45"
   
-  
-  # -- filter out rows with sunshine NA
-  data <- data[!is.na(data$sunshine), ]
-  
-  # -- build stats (to order)
-  stats <- data %>%
-    group_by(month) %>%
-    summarise(cumsum = sum(sunshine, na.rm = TRUE),
-              mean = mean(sunshine, na.rm = TRUE),
-              median = median(sunshine, na.rm = TRUE)) %>%
-    arrange(., -median) %>%
-    mutate(name = month.name[month])
-  
-  
-  # -- get max sunshine
-  maxday <- data[!is.na(data$sunshine) & data$sunshine == max(data$sunshine, na.rm = T), ]
-  maxvalue <- unique(maxday$sunshine)
-  maxmonth <- names(which.max(table(maxday$month)))
-  
   # -- build color palette
   color_palette <- c("#9d9d9d",
                      "#ad9a9e",
@@ -38,14 +19,39 @@ sunshine <- function(data, family = ""){
                      "#ff9330",
                      "#ff9900")
   
+  
+  
+  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  # Shit code to throw away from function
+  
+  # -- Add Google Font
+  #font_add_google(name = "Lexend")
+  
+  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  
+  
+  # -- filter out rows with sunshine NA
+  data <- data[!is.na(data$sunshine), ]
+  
+  # -- build stats (to order)
+  stats <- data %>%
+    group_by(month) %>%
+    summarise(cumsum = sum(sunshine, na.rm = TRUE),
+              mean = mean(sunshine, na.rm = TRUE),
+              median = median(sunshine, na.rm = TRUE)) %>%
+    arrange(., -median) %>%
+    mutate(name = month.name[month])
+  
+  # -- get max sunshine
+  maxday <- data[!is.na(data$sunshine) & data$sunshine == max(data$sunshine, na.rm = T), ]
+  maxvalue <- unique(maxday$sunshine)
+  maxmonth <- names(which.max(table(maxday$month)))
+  
   # -- set names (months)
   names(color_palette) <- rev(stats$month)
   
-  # -- Add Google Font
-  font_add_google(name = "Lexend")
-  
   # -- enable custom fonts
-  showtext_auto()
+  showtext::showtext_auto()
   
   # -- init
   ggplot(data,
@@ -61,7 +67,7 @@ sunshine <- function(data, family = ""){
       color = color_text) +
     
     # -- background violin area
-    geom_violinhalf(
+    see::geom_violinhalf(
       position = position_nudge(x = -0.05),
       flip = TRUE,
       colour = NA,
