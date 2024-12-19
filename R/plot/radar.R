@@ -45,7 +45,7 @@ radar <- function(observations){
       alpha = 0.25) +
   
     # -- winters & summers text
-    geom_textpath(
+    geomtextpath::geom_textpath(
       data =   
         # -- check size
         if(nrow(seasons) == 1)
@@ -324,7 +324,7 @@ radar <- function(observations){
     
     # -- make it polar
     # coord_polar()
-    coord_curvedpolar()
+    geomtextpath::coord_curvedpolar()
     
 }
 

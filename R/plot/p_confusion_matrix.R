@@ -32,7 +32,7 @@ p_confusion_matrix <- function(c_mat){
          aes(color = color)) +
     
     # -- circular area
-    geom_circle(
+    ggforce::geom_circle(
       aes(x0 = x,
           y0 = 0,
           r = radius,
