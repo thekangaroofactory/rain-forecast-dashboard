@@ -22,16 +22,90 @@ prediction_Server <- function(id, predictions, observations) {
     nb_removed <- reactiveVal(NULL)
     
     
+    # -- compute dataset stats
+    dataset_date_min <- min(predictions$date)
+    dataset_date_max <- max(predictions$date)
+    
+    
     # --------------------------------------------------------------------------
     # Data selection
     # --------------------------------------------------------------------------
     
     # -- input
-    output$date_slider <- renderUI(sliderInput(inputId = ns("date_slider"),
-                                               label = "Date range",
-                                               min = min(predictions$date),
-                                               max = max(predictions$date),
-                                               value = c(min(predictions$date), max(predictions$date))))
+    output$date_slider <- renderUI(
+      div(style="display:inline-block",
+          sliderInput(inputId = ns("date_slider"),
+                      label = "Date range:",
+                      min = dataset_date_min,
+                      max = dataset_date_max,
+                      value = c(dataset_date_min, dataset_date_max)),
+          
+          br(),
+          
+          actionButton(inputId = ns("previous_year"),
+                       label = icon(name = "backward")),
+          
+          actionButton(inputId = ns("next_year"),
+                       label = icon(name = "forward")),
+          
+          actionButton(inputId = ns("this_year"),
+                       label = "This year"),
+          
+          actionButton(inputId = ns("all_years"),
+                       label = "All")))
+    
+    
+    # -- all_years
+    observeEvent(input$all_years,
+      updateSliderInput(inputId = "date_slider",
+                        value = c(dataset_date_min, dataset_date_max)))
+    
+    
+    # -- this_year
+    observeEvent(input$this_year,
+      updateSliderInput(inputId = "date_slider",
+                        value = c(as.Date("2024-01-01"), dataset_date_max)))
+    
+    
+    # -- previous_year
+    observeEvent(input$previous_year, {
+      
+      # -- check 
+      req(input$date_slider[1] != dataset_date_min)
+      
+      # -- remove 1 year
+      year <- lubridate::year(input$date_slider[1])
+      if(year != lubridate::year(dataset_date_min))
+        year <- year - 1
+      
+      # -- compute start / end
+      year_start <- as.Date(paste(year, "01-01", sep = "-"))
+      year_end <- as.Date(paste(year, "12-31", sep = "-"))
+      
+      # -- update input
+      updateSliderInput(inputId = "date_slider",
+                        value = c(year_start, year_end))})
+    
+    
+    # -- next_year
+    observeEvent(input$next_year, {
+      
+      # -- check 
+      req(input$date_slider[1] != dataset_date_max)
+      
+      # -- remove 1 year
+      year <- lubridate::year(input$date_slider[2])
+      if(year != lubridate::year(dataset_date_max))
+        year <- year + 1
+      
+      # -- compute start / end
+      year_start <- as.Date(paste(year, "01-01", sep = "-"))
+      year_end <- as.Date(paste(year, "12-31", sep = "-"))
+      
+      # -- update input
+      updateSliderInput(inputId = "date_slider",
+                        value = c(year_start, year_end))})
+    
     
     # -- filter dataset
     selected_predictions <- reactive({
