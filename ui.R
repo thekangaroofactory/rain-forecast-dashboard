@@ -53,9 +53,7 @@ page_navbar(
             fluidRow(
               pre_header_ui("pre")),
             
-            fluidRow(
-              p("Some predictions may be filtered in case it is not possible to check their accuracy.", br(),
-                "This happens when the rainfall value is missing in the corresponding observation.")),
+            pre_summary_ui("pre"),
             
             pre_selection_ui("pre"),
             

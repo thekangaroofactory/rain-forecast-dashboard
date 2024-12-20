@@ -4,7 +4,7 @@
 # Server logic
 # ------------------------------------------------------------------------------
 
-prediction_Server <- function(id, predictions) {
+prediction_Server <- function(id, predictions, observations) {
   moduleServer(id, function(input, output, session) {
     
     # --------------------------------------------------------------------------
@@ -85,6 +85,22 @@ prediction_Server <- function(id, predictions) {
       round(sum(selected_predictions()$accurate) / nrow(selected_predictions()) * 100, digits = 2), "%"))
     output$predict_inaccuracy <- renderText(paste0(
       round(sum(!selected_predictions()$accurate) / nrow(selected_predictions()) * 100, digits = 2), "% predictions KO"))
+    
+    
+    # --------------------------------------------------------------------------
+    # Summary section
+    # --------------------------------------------------------------------------
+    
+    # -- latest predictions
+    output$latest_1 <- renderUI(
+      prediction_card(tail(predictions, n = 1)))
+    
+    output$latest_2 <- renderUI(
+      prediction_card(predictions[nrow(predictions) - 1, ]))
+    
+    output$latest_3 <- renderUI(
+      prediction_card(predictions[nrow(predictions) - 2, ]))
+    
     
     
     # --------------------------------------------------------------------------
