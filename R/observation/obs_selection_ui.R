@@ -14,7 +14,7 @@ obs_selection_ui <- function(id){
   
   # -- return
   layout_columns(
-    col_widths = c(2, 10),
+    col_widths = c(1, 11),
     
     p(""),
     

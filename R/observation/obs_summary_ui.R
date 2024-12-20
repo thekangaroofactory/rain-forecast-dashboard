@@ -12,7 +12,9 @@ obs_summary_ui <- function(id){
   
   # -- return
   layout_columns(
-    col_widths = c(7, 5),
+    col_widths = c(1, 6, 4, 1),
+    
+    p(""),
     
     tagList(
       h2("Observations"),
@@ -22,7 +24,7 @@ obs_summary_ui <- function(id){
       textOutput(ns("dataset_summary"), inline = TRUE))),
     
     card(
-      class = "mycard",
+      class = "container-card",
       card_header(h4("Latest Observation")),
       card_body(
         layout_column_wrap(
