@@ -24,7 +24,8 @@ p_confusion_matrix <- function(c_mat){
                c_mat$false_negative / nb_pre * 100),
     
     # -- good / bad
-    color = c(1,0,1,0))
+    #color = c(1,0,1,0))
+    color = c("good","bad","good","bad"))
   
   
   # -- build plot & return
@@ -44,18 +45,36 @@ p_confusion_matrix <- function(c_mat){
       aes(x = x,
           label = value),
       y = 0,
-      size = 5) +
+      size = 4) +
+    
+    # -- legend
+    geom_text(
+      data = data.frame(
+        x = c(0, 100),
+        label = c("Rain predictions", "No rain predictions")),
+      inherit.aes = FALSE,
+      aes(x = x,
+          label = label),
+      y = -55,
+      color = "grey",
+      size = 4) +
     
     # -- fill & color
-    scale_colour_gradient(low = "grey", high = "orange") +
-    scale_fill_gradient(low = "grey", high = "orange") +
+    #scale_colour_gradient(low = "grey", high = "orange") +
+    #scale_fill_gradient(low = "grey", high = "orange") +
+    scale_colour_manual(values = c("good" = "orange", "bad" = "grey")) +
+    scale_fill_manual(values = c("good" = "orange", "bad" = "grey")) +
     
     # -- keep it 'squared'
     coord_fixed() +
+    ylim(-60, 60) +
     
     # -- theme
     theme(
-      legend.position = "none",
+      legend.position = "right",
+      legend.text = element_text(color = "grey"),
+      legend.title = element_text(color = "grey"),
+      legend.background = element_blank(),
       plot.background = element_blank(),
       panel.background = element_blank(),
       panel.grid = element_blank(),
@@ -65,4 +84,4 @@ p_confusion_matrix <- function(c_mat){
   
 }
 
-#print(p_confusion_matrix(c_matrix))
+#print(p_confusion_matrix(confusion_matrix(predictions_df)))
