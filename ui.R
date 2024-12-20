@@ -7,7 +7,7 @@
 page_navbar(
   
   fillable = FALSE,
-  footer = p(style = "font-size:9pt;", "© 2024 Philippe Peret"),
+  footer = p(style = "font-size:9pt;margin-top:20px;", "© 2024 Philippe Peret"),
   
   # -- header / css
   header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css"),
@@ -98,7 +98,7 @@ page_navbar(
             
             tags$a(href = "https://orcid.org/0009-0003-9666-7490",
                    target = "_blank",
-                   "ORCID")), br(),
+                   "ORCID")),
   
 )
 
