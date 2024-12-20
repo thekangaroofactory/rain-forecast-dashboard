@@ -46,7 +46,8 @@ observation_Server <- function(id, observations) {
     output$location <- renderText(unique(observations$location))
     output$nb_obs <- renderText(nrow(observations))
     output$days_with_rain <- renderText(paste0(round(sum(observations$rain_fall > 0, na.rm = TRUE) / nrow(observations) * 100), "%"))
-    output$min_temp <- renderText(min(observations$min_temp, na.rm = TRUE))
+    output$rainfall <- renderText(
+      paste0(round(mean(observations[observations$rain_fall > 0, ]$rain_fall, na.rm = TRUE), digits = 1), "mm"))
     
     
     # -- summary section text

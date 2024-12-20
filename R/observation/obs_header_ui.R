@@ -34,8 +34,8 @@ obs_header_ui <- function(id){
     
     # -- xxx
     value_box(
-      title = "Temperature",
+      title = "Average rainfall",
       theme = "bg-gradient-yellow-orange",
-      value = uiOutput(ns("min_temp"))))
+      value = uiOutput(ns("rainfall"))))
   
 }
