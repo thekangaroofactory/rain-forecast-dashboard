@@ -13,15 +13,16 @@ pre_selection_ui <- function(id){
   ns <- NS(id)
   
   # -- return
-  layout_columns(
-    col_widths = c(1, 11),
-    
-    p(""),
-    
-    tagList(
-      h2("Select predictions"),
-      p("By default, all predictions are selected.", br(),
-        "It's possible to tune the date range using the slider or buttons:"),
-      uiOutput(ns("date_slider"))))
+  div(class = "section",
+      layout_columns(
+        col_widths = c(1, 11),
+        
+        p(""),
+        
+        tagList(
+          h2("Select predictions"),
+          p("By default, all predictions are selected.", br(),
+            "It's possible to tune the date range using the slider or buttons:"),
+          uiOutput(ns("date_slider")))))
   
 }

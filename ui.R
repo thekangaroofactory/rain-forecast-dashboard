@@ -27,40 +27,35 @@ page_navbar(
   # -- Observations
   nav_panel(title = "Observations",
             
-            fluidRow(
-              obs_header_ui("obs")),
+            # -- header boxes
+            obs_header_ui("obs"),
             
-            p(" "),
+            # -- summary
+            obs_summary_ui("obs"),
             
-            fluidRow(
-              obs_summary_ui("obs")),
+            # -- select data
+            obs_selection_ui("obs"),
             
-            fluidRow(
-              obs_selection_ui("obs")),
-            
-            p(" "),
-            
-            fluidRow(
-              obs_radar_ui("obs")),
-            
-            fluidRow(
-              obs_sunshine_ui("obs"))),
+            # -- plots
+            obs_radar_ui("obs"),
+            obs_sunshine_ui("obs")),
   
   
   # -- Predictions
   nav_panel(title = "Predictions", 
             
-            fluidRow(
-              pre_header_ui("pre")),
+            # -- header boxes
+            pre_header_ui("pre"),
             
+            # -- summary
             pre_summary_ui("pre"),
             
+            # -- select data
             pre_selection_ui("pre"),
             
+            # -- plots
             pre_accuracy_ui("pre"),
-            
             pre_confusion_ui("pre"),
-            
             pre_kpis_ui("pre")),
   
   

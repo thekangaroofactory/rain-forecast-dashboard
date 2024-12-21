@@ -21,42 +21,51 @@
 
 /* -- Body Section ---------------------------------------------------------- */
 
+.section {
+  
+  margin-top:50px;
+  
+}
 
+
+/*
 .header {
   
   font-size:36pt;
   font-weight: bold;
   
-}
+}*/
 
 
-.footer {
+/*.footer {
   
   font-size:9pt;
   
   margin-left: 20px;
   margin-bottom: 50px;
   
-}
+}*/
 
+/* -- buttons */
 .btn {
   
   width: 20%;
-  max-width: 200px;
+  max-width: 150px;
   
   border-radius: 50px;
   
 }
 
 
-.mycard {
+/* -- cards used as a container for smaller cards (ex: latest observations) */
+.container-card {
   
   background: var(--grey-mid-high);
   
 }
 
 
-.obs {
+/*.obs {
 
   font-size: 10pt;
   
@@ -66,4 +75,4 @@
   border-radius: 10px;
   border: solid 1px #F8EAD3;
   
-}
+}*/
