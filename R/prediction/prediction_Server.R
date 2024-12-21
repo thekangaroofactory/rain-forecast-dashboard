@@ -28,6 +28,14 @@ prediction_Server <- function(id, predictions, observations) {
     
     
     # --------------------------------------------------------------------------
+    # Scale predictions
+    # --------------------------------------------------------------------------
+    # will be moved when multi model is supported ***
+    
+    predictions <- scale_predictions(predictions)
+    
+    
+    # --------------------------------------------------------------------------
     # Data selection
     # --------------------------------------------------------------------------
     

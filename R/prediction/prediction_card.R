@@ -14,6 +14,7 @@ prediction_card <- function(prediction){
     card_body(
       style = "font-size: 9pt",
       "Predict rain: ", prediction$expect_rain_tomorrow, br(),
+      "Chance of rain: ", paste0(round(prediction$scaled_prediction * 100), "%"),
       
       if(prediction$date_tomorrow <= Sys.Date()){
         p("Real rain: ", prediction$real_rain_tomorrow, br(),
