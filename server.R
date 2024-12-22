@@ -7,6 +7,16 @@
 function(input, output, session) {
   
   # --------------------------------------
+  # Init
+  
+  cat("Starting application server... \n")
+  
+  # -- check debug mode
+  if(DEBUG)
+    cat("[i] ***** DEBUG mode is ON ***** \n")
+  
+  
+  # --------------------------------------
   # Load datasets
   
   # -- get available observations & transform
@@ -35,6 +45,6 @@ function(input, output, session) {
   
   # -- observation server
   observation_Server(id = "obs", observations)
-  prediction_Server(id = "pre", predictions)
+  prediction_Server(id = "pre", predictions, observations)
   
 }

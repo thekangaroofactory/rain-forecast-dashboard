@@ -32,7 +32,7 @@ prediction_Server <- function(id, predictions, observations) {
     # --------------------------------------------------------------------------
     # will be moved when multi model is supported ***
     
-    predictions <- scale_predictions(predictions)
+    predictions <- scale_predictions(predictions, threshold = 0.28)
     
     
     # --------------------------------------------------------------------------
