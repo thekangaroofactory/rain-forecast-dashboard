@@ -218,5 +218,11 @@ prediction_Server <- function(id, predictions, observations) {
     output$f1_score <- renderText(round(f1_score(), digits = 2))
     
     
+    # --------------------------------------------------------------------------
+    # Precision / recall section
+    # --------------------------------------------------------------------------
+    
+    output$distribution_plot <- renderPlot(p_confidence(selected_predictions(), spread = 0.25, n = input$nb_buckets), bg = "transparent")
+    
   })
 }
