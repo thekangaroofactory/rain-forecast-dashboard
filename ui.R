@@ -56,7 +56,8 @@ page_navbar(
             # -- plots
             pre_accuracy_ui("pre"),
             pre_confusion_ui("pre"),
-            pre_kpis_ui("pre")),
+            pre_kpis_ui("pre"),
+            pre_distribution_ui("pre")),
   
   
   # -- Models
