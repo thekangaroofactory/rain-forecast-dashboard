@@ -71,7 +71,7 @@ observation_Server <- function(id, observations) {
                   label = "Date range:",
                   min = dataset_date_min,
                   max = dataset_date_max,
-                  value = c(as.Date("2024-01-01"), dataset_date_max)),
+                  value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)),
       
       br(),
       

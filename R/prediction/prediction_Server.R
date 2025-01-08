@@ -72,7 +72,7 @@ prediction_Server <- function(id, predictions, observations) {
     # -- this_year
     observeEvent(input$this_year,
       updateSliderInput(inputId = "date_slider",
-                        value = c(as.Date("2024-01-01"), dataset_date_max)))
+                        value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)))
     
     
     # -- previous_year
