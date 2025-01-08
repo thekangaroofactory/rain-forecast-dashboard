@@ -1,7 +1,10 @@
-# rain-forecast-webapp
+# Rain Forecast Dashboard
 
-The rain forecast web application
+The Rain Forecast Dashboard is a R / Shiny web application that is part of the Rain Forecast Project.\
+It features data visualizations built from weather observation data that are collected in real time as well as rain predictions using a machine learning model (AI).
 
-This application is a component of the version.2 architecture
+The project also contains an API to support this dashboard with all the data engineering processes in the background.
 
-![Example plot](./www/img/radar_plot_example.png)
+![Weather data visualization](www/img/radar_plot_example.png)
+
+![Sunshine data visualization](www/img/sunshine_plot_2024.png)
