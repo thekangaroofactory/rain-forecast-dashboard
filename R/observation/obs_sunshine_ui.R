@@ -13,10 +13,9 @@ obs_sunshine_ui <- function(id){
   # -- return
   div(class = "section",
       layout_columns(
-        col_widths = c(1, 5, 5, 1),
+        col_widths = c(6, 6),
         
-        p(),
-        
+        # -- text
         tagList(
           h2("Sunshine"),
           
@@ -31,12 +30,9 @@ obs_sunshine_ui <- function(id){
           
           p("Shadows display the distribution of values along the range"),
           
-          tags$i("Computation time: ", textOutput(ns("benchmark_sunshine"), inline = T), "ms")
-          
-        ),
+          tags$i("Computation time: ", textOutput(ns("benchmark_sunshine"), inline = T), "ms")),
         
-        plotOutput(ns("p_sunshine"), height = "600px"),
-        
-        p("")))
+        # -- plot
+        plotOutput(ns("p_sunshine"), height = "600px")))
   
 }

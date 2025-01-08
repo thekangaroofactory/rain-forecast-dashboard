@@ -13,9 +13,7 @@ pre_summary_ui <- function(id){
   # -- return
   div(class = "section",
       layout_columns(
-        col_widths = c(1, 6, 4, 1),
-        
-        p(""),
+        col_widths = c(6, 6),
         
         tagList(
           h2("Predictions"),

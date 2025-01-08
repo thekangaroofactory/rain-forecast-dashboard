@@ -26,6 +26,7 @@ page_navbar(
   
   # -- Observations
   nav_panel(title = "Observations",
+            class = "p-5",
             
             # -- header boxes
             obs_header_ui("obs"),
@@ -43,6 +44,7 @@ page_navbar(
   
   # -- Predictions
   nav_panel(title = "Predictions", 
+            class = "p-5",
             
             # -- header boxes
             pre_header_ui("pre"),
@@ -72,6 +74,7 @@ page_navbar(
   
   # -- About
   nav_panel(title = "About", 
+            class = "p-5",
             
             # -- project
             h2("About the Project"),
@@ -79,20 +82,16 @@ page_navbar(
               tags$a(href = "http://www.bom.gov.au/climate/data/", target = "_blank", "http://www.bom.gov.au/climate/data/"), br(),
               "It contains 140000+ examples, captured between 2008 and 2017 in different locations accross Australia, with daily observations"),
             
-            # -- contact  
-            h2("Contact"),
-            tags$a(href = "https://www.linkedin.com/in/philippeperet/", 
-                   target = "_blank",
-                   "LinkedIn"),
-            
-            
-            tags$a(href = "https://github.com/thekangaroofactory",
-                   target = "_blank",
-                   "GitHub"),
-            
-            tags$a(href = "https://orcid.org/0009-0003-9666-7490",
-                   target = "_blank",
-                   "ORCID")),
+            # -- contact
+            div(class = "section",
+                h2("Contact"),
+                tags$a(href = "https://www.linkedin.com/in/philippeperet/", 
+                       target = "_blank",
+                       "LinkedIn"),
+                
+                
+                tags$a(href = "https://github.com/thekangaroofactory",
+                       target = "_blank",
+                       "GitHub")))
   
 )
-

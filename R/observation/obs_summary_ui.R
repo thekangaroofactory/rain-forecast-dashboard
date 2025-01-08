@@ -13,10 +13,9 @@ obs_summary_ui <- function(id){
   # -- return
   div(class = "section",
       layout_columns(
-        col_widths = c(1, 6, 4, 1),
+        col_widths = c(6, 4),
         
-        p(""),
-        
+        # -- Text
         tagList(
           h2("Observations"),
           p("The observation dashboard explores the weather data as collected from the source.", br(),
@@ -24,6 +23,7 @@ obs_summary_ui <- function(id){
           p("The data are downloaded daily from the BOM website.", br(),
             textOutput(ns("dataset_summary"), inline = TRUE))),
         
+        # -- Cards
         card(
           class = "container-card",
           card_header(h4("Latest Observation")),

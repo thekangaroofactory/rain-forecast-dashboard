@@ -15,9 +15,7 @@ pre_selection_ui <- function(id){
   # -- return
   div(class = "section",
       layout_columns(
-        col_widths = c(1, 11),
-        
-        p(""),
+        col_widths = c(12),
         
         tagList(
           h2("Select predictions"),

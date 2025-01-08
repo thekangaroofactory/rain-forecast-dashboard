@@ -9,9 +9,7 @@ pre_kpis_ui <- function(id){
   # -- return
   div(class = "section",
       layout_columns(
-        col_widths = c(1, 3, 3, 3, 1),
-        
-        p(" "),
+        col_widths = c(4, 4, 4),
         
         tagList(
           value_box(
@@ -35,8 +33,6 @@ pre_kpis_ui <- function(id){
             theme = "bg-gradient-yellow-orange",
             value = textOutput(ns("f1_score"))),
           p("The F1 score is the harmonic mean of the precision and recall.", br(),
-            "A value of 1 would mean perfect precition & recall.")),
-        
-        p(" ")))
+            "A value of 1 would mean perfect precition & recall."))))
   
 }
