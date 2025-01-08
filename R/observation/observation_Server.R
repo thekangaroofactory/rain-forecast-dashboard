@@ -163,6 +163,7 @@ observation_Server <- function(id, observations) {
         
         # -- build plot
         p <- radar(selected_observations())
+        p <- p_copyright(p)
         
         # -- benchmark
         ts_after <- ktools::getTimestamp()
@@ -196,6 +197,7 @@ observation_Server <- function(id, observations) {
         
         # -- build plot
         p <- sunshine(selected_observations())
+        p <- p_copyright(p)
         
         # -- benchmark
         ts_after <- ktools::getTimestamp()
@@ -206,12 +208,6 @@ observation_Server <- function(id, observations) {
         p}, 
       
       bg = "transparent")
-    
-    
-    # --------------------------------------------------------------------------
-    # -- table
-    #output$obs_table <- DT::renderDT(observations, fillContainer = TRUE)
-    
     
   })
 }

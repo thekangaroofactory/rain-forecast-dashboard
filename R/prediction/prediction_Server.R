@@ -190,15 +190,15 @@ prediction_Server <- function(id, predictions, observations) {
     # --------------------------------------------------------------------------
     
     # -- confusion matrix plot
-    output$confusion_plot <- renderPlot(p_confusion_matrix(c_matrix()), bg = "transparent")
-    
+    output$confusion_plot <- renderPlot(p_copyright(p_confusion_matrix(c_matrix())), bg = "transparent")
+
     
     # --------------------------------------------------------------------------
     # Accuracy over time section
     # --------------------------------------------------------------------------
     
     # -- accuracy evolution
-    output$accuracy_plot <- renderPlot(p_accuracy_over_time(selected_predictions()), bg = "transparent")
+    output$accuracy_plot <- renderPlot(p_copyright(p_accuracy_over_time(selected_predictions())), bg = "transparent")
     
     
     # --------------------------------------------------------------------------
@@ -222,7 +222,7 @@ prediction_Server <- function(id, predictions, observations) {
     # Precision / recall section
     # --------------------------------------------------------------------------
     
-    output$distribution_plot <- renderPlot(p_confidence(selected_predictions(), spread = 0.25, n = input$nb_buckets), bg = "transparent")
+    output$distribution_plot <- renderPlot(p_copyright(p_confidence(selected_predictions(), spread = 0.25, n = input$nb_buckets)), bg = "transparent")
     
   })
 }
