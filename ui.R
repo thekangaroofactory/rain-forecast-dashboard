@@ -18,7 +18,6 @@ page_navbar(
     fg = "#FFF",
     primary = "orange",
     secondary = "#ececec",
-    "theme-colors" = "('flair': orange)",
     base_font = font_google("Quicksand")),
   
   # -- title
