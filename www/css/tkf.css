@@ -1,6 +1,5 @@
 
 
-
 /* -- Color Section --------------------------------------------------------- */
 
 :root {
@@ -19,33 +18,7 @@
 }
 
 
-/* -- Body Section ---------------------------------------------------------- */
-
-/* -- container to increase space between ui sections */
-.section {
-  
-  margin-top:50px;
-  
-}
-
-
-/*
-.header {
-  
-  font-size:36pt;
-  font-weight: bold;
-  
-}*/
-
-
-/*.footer {
-  
-  font-size:9pt;
-  
-  margin-left: 20px;
-  margin-bottom: 50px;
-  
-}*/
+/* -- Component Section ----------------------------------------------------- */
 
 /* -- buttons */
 .btn {
@@ -58,6 +31,16 @@
 }
 
 
+/* -- Body Section ---------------------------------------------------------- */
+
+/* -- container to increase space between ui sections */
+.section {
+  
+  margin-top:50px;
+  
+}
+
+
 /* -- cards used as a container for smaller cards (ex: latest observations) */
 .container-card {
   
@@ -65,15 +48,3 @@
   
 }
 
-
-/*.obs {
-
-  font-size: 10pt;
-  
-  background: rgb(19,19,19);
-  background: linear-gradient(45deg, rgba(19,19,19,1) 0%, rgba(36,36,36,1) 50%, rgba(41,41,41,1) 100%); 
-  
-  border-radius: 10px;
-  border: solid 1px #F8EAD3;
-  
-}*/
