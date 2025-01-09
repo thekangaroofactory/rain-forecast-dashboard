@@ -13,7 +13,7 @@ pre_kpis_ui <- function(id){
         
         card(
           class = "container-card p-3",
-          card_header(h4("Latest Predictions")),
+          card_header(h4("Performance Metrics")),
           card_body(
             layout_column_wrap(
               width = 1/3,
