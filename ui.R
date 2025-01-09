@@ -10,7 +10,7 @@ page_navbar(
   footer = p(style = "font-size:9pt;margin-top:20px;", "© 2025 Philippe Peret"),
   
   # -- header / css
-  header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/tkf.css"),
+  header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/rain_forecast.css"),
   
   # -- theme
   theme = bs_theme(
