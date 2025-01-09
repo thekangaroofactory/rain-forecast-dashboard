@@ -30,7 +30,7 @@ CMD ["R", "-e", "shiny::runApp('/home/shinyapp', host = '0.0.0.0', port = 3838)"
 
 
 # -- build docker image:
-# docker build -t my-app-image .
+# docker build -t rain-forecast-dashboard .
 
 # -- run docker image:
 # docker run -p 3838:3838 my-app-image

@@ -13,15 +13,14 @@ library(ggplot2)
 # geomtextpath
 # see
 # showtext
-
+# ggnewscale
 
 # -- to be removed!? (maybe used in the big data viz with legends & all)
-# library(ggnewscale)
 # library(ggtext)
 
 
 # -- Debug
-DEBUG <- FALSE
+DEBUG <- Sys.getenv("DEBUG")
 
 
 # -- Set environment

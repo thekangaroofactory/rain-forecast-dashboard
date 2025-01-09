@@ -4,7 +4,7 @@
 # Server logic
 # ------------------------------------------------------------------------------
 
-prediction_Server <- function(id, predictions) {
+prediction_Server <- function(id, predictions, observations) {
   moduleServer(id, function(input, output, session) {
     
     # --------------------------------------------------------------------------
@@ -22,16 +22,98 @@ prediction_Server <- function(id, predictions) {
     nb_removed <- reactiveVal(NULL)
     
     
+    # -- compute dataset stats
+    dataset_date_min <- min(predictions$date)
+    dataset_date_max <- max(predictions$date)
+    
+    
+    # --------------------------------------------------------------------------
+    # Scale predictions
+    # --------------------------------------------------------------------------
+    # will be moved when multi model is supported ***
+    
+    predictions <- scale_predictions(predictions, threshold = 0.28)
+    
+    
     # --------------------------------------------------------------------------
     # Data selection
     # --------------------------------------------------------------------------
     
     # -- input
-    output$date_slider <- renderUI(sliderInput(inputId = ns("date_slider"),
-                                               label = "Date range",
-                                               min = min(predictions$date),
-                                               max = max(predictions$date),
-                                               value = c(min(predictions$date), max(predictions$date))))
+    output$date_slider <- renderUI(
+      div(style="display:inline-block",
+          sliderInput(inputId = ns("date_slider"),
+                      label = "Date range:",
+                      min = dataset_date_min,
+                      max = dataset_date_max,
+                      value = c(dataset_date_min, dataset_date_max)),
+          
+          br(),
+          
+          actionButton(inputId = ns("previous_year"),
+                       label = icon(name = "backward")),
+          
+          actionButton(inputId = ns("next_year"),
+                       label = icon(name = "forward")),
+          
+          actionButton(inputId = ns("this_year"),
+                       label = "This year"),
+          
+          actionButton(inputId = ns("all_years"),
+                       label = "All")))
+    
+    
+    # -- all_years
+    observeEvent(input$all_years,
+      updateSliderInput(inputId = "date_slider",
+                        value = c(dataset_date_min, dataset_date_max)))
+    
+    
+    # -- this_year
+    observeEvent(input$this_year,
+      updateSliderInput(inputId = "date_slider",
+                        value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)))
+    
+    
+    # -- previous_year
+    observeEvent(input$previous_year, {
+      
+      # -- check 
+      req(input$date_slider[1] != dataset_date_min)
+      
+      # -- remove 1 year
+      year <- lubridate::year(input$date_slider[1])
+      if(year != lubridate::year(dataset_date_min))
+        year <- year - 1
+      
+      # -- compute start / end
+      year_start <- as.Date(paste(year, "01-01", sep = "-"))
+      year_end <- as.Date(paste(year, "12-31", sep = "-"))
+      
+      # -- update input
+      updateSliderInput(inputId = "date_slider",
+                        value = c(year_start, year_end))})
+    
+    
+    # -- next_year
+    observeEvent(input$next_year, {
+      
+      # -- check 
+      req(input$date_slider[1] != dataset_date_max)
+      
+      # -- remove 1 year
+      year <- lubridate::year(input$date_slider[2])
+      if(year != lubridate::year(dataset_date_max))
+        year <- year + 1
+      
+      # -- compute start / end
+      year_start <- as.Date(paste(year, "01-01", sep = "-"))
+      year_end <- as.Date(paste(year, "12-31", sep = "-"))
+      
+      # -- update input
+      updateSliderInput(inputId = "date_slider",
+                        value = c(year_start, year_end))})
+    
     
     # -- filter dataset
     selected_predictions <- reactive({
@@ -88,19 +170,35 @@ prediction_Server <- function(id, predictions) {
     
     
     # --------------------------------------------------------------------------
+    # Summary section
+    # --------------------------------------------------------------------------
+    
+    # -- latest predictions
+    output$latest_1 <- renderUI(
+      prediction_card(tail(predictions, n = 1)))
+    
+    output$latest_2 <- renderUI(
+      prediction_card(predictions[nrow(predictions) - 1, ]))
+    
+    output$latest_3 <- renderUI(
+      prediction_card(predictions[nrow(predictions) - 2, ]))
+    
+    
+    
+    # --------------------------------------------------------------------------
     # Confusion matrix section
     # --------------------------------------------------------------------------
     
     # -- confusion matrix plot
-    output$confusion_plot <- renderPlot(p_confusion_matrix(c_matrix()), bg = "transparent")
-    
+    output$confusion_plot <- renderPlot(p_copyright(p_confusion_matrix(c_matrix())), bg = "transparent")
+
     
     # --------------------------------------------------------------------------
     # Accuracy over time section
     # --------------------------------------------------------------------------
     
     # -- accuracy evolution
-    output$accuracy_plot <- renderPlot(p_accuracy_over_time(selected_predictions()), bg = "transparent")
+    output$accuracy_plot <- renderPlot(p_copyright(p_accuracy_over_time(selected_predictions())), bg = "transparent")
     
     
     # --------------------------------------------------------------------------
@@ -119,6 +217,12 @@ prediction_Server <- function(id, predictions) {
     output$recall <- renderText(round(recall(), digits = 2))
     output$f1_score <- renderText(round(f1_score(), digits = 2))
     
+    
+    # --------------------------------------------------------------------------
+    # Precision / recall section
+    # --------------------------------------------------------------------------
+    
+    output$distribution_plot <- renderPlot(p_copyright(p_confidence(selected_predictions(), spread = 0.25, n = input$nb_buckets)), bg = "transparent")
     
   })
 }

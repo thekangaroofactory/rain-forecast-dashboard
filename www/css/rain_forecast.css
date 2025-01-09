@@ -1,0 +1,50 @@
+
+
+/* -- Color Section --------------------------------------------------------- */
+
+:root {
+
+  /* grey */
+  --grey-dark: #2d3037;
+  --grey-mid-high: #393e44;
+  --grey-mid-low: #494c51;
+  --grey-light: #75787d;
+
+
+  /* color */
+  --color-light: #f0c197;
+  --color-dark: #ce905d;
+
+}
+
+
+/* -- Component Section ----------------------------------------------------- */
+
+/* -- buttons */
+.btn {
+  
+  width: 20%;
+  max-width: 150px;
+  
+  border-radius: 50px;
+  
+}
+
+
+/* -- Body Section ---------------------------------------------------------- */
+
+/* -- container to increase space between ui sections */
+.section {
+  
+  margin-top:50px;
+  
+}
+
+
+/* -- cards used as a container for smaller cards (ex: latest observations) */
+.container-card {
+  
+  background: var(--grey-mid-high);
+  
+}
+
