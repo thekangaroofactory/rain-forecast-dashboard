@@ -64,46 +64,47 @@ observation_Server <- function(id, observations) {
     output$latest_3 <- renderUI(
       observation_card(observations[3, ]))
     
-    # -- date slider
+    
+    # -- date range selection
     output$date_range <- renderUI(
+      
+      # -- slider input
       div(style="display:inline-block",
-      sliderInput(inputId = ns("date_slider"),
-                  label = "Date range:",
-                  min = dataset_date_min,
-                  max = dataset_date_max,
-                  value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)),
-      
-      br(),
-      
-      actionButton(inputId = ns("previous_year"),
-                   label = icon(name = "backward")),
-      
-      actionButton(inputId = ns("next_year"),
-                   label = icon(name = "forward")),
-      
-      actionButton(inputId = ns("this_year"),
-                   label = "This year"),
-      
-      actionButton(inputId = ns("all_years"),
-                   label = "All")
-      
-      ))
+          sliderInput(inputId = ns("date_slider"),
+                      label = "Date range:",
+                      min = dataset_date_min,
+                      max = dataset_date_max,
+                      value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)),
+          
+          # -- spacing
+          br(),
+          
+          # -- buttons
+          actionButton(inputId = ns("previous_year"),
+                       label = icon(name = "backward")),
+          
+          actionButton(inputId = ns("next_year"),
+                       label = icon(name = "forward")),
+          
+          actionButton(inputId = ns("this_year"),
+                       label = "This year"),
+          
+          actionButton(inputId = ns("all_years"),
+                       label = "All")))
     
-    observeEvent(input$all_years, {
-      
+    
+    # -- all_years
+    observeEvent(input$all_years,
       updateSliderInput(inputId = "date_slider",
-                        value = c(dataset_date_min, dataset_date_max))
-      
-    })
+                        value = c(dataset_date_min, dataset_date_max)))
     
-    
-    observeEvent(input$this_year, {
-      
+    # -- this_year
+    observeEvent(input$this_year,
       updateSliderInput(inputId = "date_slider",
-                        value = c(as.Date("2024-01-01"), dataset_date_max))
-      
-    })
+                        value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)))
     
+    
+    # -- previous_year
     observeEvent(input$previous_year, {
       
       # -- check 
@@ -120,10 +121,10 @@ observation_Server <- function(id, observations) {
       
       # -- update input
       updateSliderInput(inputId = "date_slider",
-                        value = c(year_start, year_end))
-      
-    })
+                        value = c(year_start, year_end))})
     
+    
+    # -- next_year
     observeEvent(input$next_year, {
     
       # -- check 
@@ -140,9 +141,7 @@ observation_Server <- function(id, observations) {
       
       # -- update input
       updateSliderInput(inputId = "date_slider",
-                        value = c(year_start, year_end))
-      
-    })
+                        value = c(year_start, year_end))})
     
     
     # --------------------------------------------------------------------------
