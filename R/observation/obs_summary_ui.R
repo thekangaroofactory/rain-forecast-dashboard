@@ -26,7 +26,7 @@ obs_summary_ui <- function(id){
         # -- Cards
         card(
           class = "container-card",
-          card_header(h4("Latest Observation")),
+          card_header(h4("Latest Observations")),
           card_body(
             layout_column_wrap(
               width = 1/3,
