@@ -5,6 +5,12 @@ It features data visualizations built from weather observation data that are col
 
 The project also contains an API to support this dashboard with all the data engineering processes in the background.
 
+## Project Summary
+
+![Project summary](www/img/Rain%20Forecast%20Dashboard.jpg)
+
+## Example of data visualization
+
 ![Weather data visualization](www/img/radar_plot_example.png)
 
 ![Sunshine data visualization](www/img/sunshine_plot_2024.png)
