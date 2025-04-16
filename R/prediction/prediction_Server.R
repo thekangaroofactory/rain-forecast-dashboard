@@ -36,6 +36,13 @@ prediction_Server <- function(id, predictions, observations) {
     
     
     # --------------------------------------------------------------------------
+    # Compute overall confidence
+    # --------------------------------------------------------------------------
+    
+    confidence_table <- confidence_rate(predictions)
+    
+    
+    # --------------------------------------------------------------------------
     # Data selection
     # --------------------------------------------------------------------------
     
@@ -175,13 +182,13 @@ prediction_Server <- function(id, predictions, observations) {
     
     # -- latest predictions
     output$latest_1 <- renderUI(
-      prediction_card(tail(predictions, n = 1)))
+      prediction_card(tail(predictions, n = 1), confidence_table))
     
     output$latest_2 <- renderUI(
-      prediction_card(predictions[nrow(predictions) - 1, ]))
+      prediction_card(predictions[nrow(predictions) - 1, ], confidence_table))
     
     output$latest_3 <- renderUI(
-      prediction_card(predictions[nrow(predictions) - 2, ]))
+      prediction_card(predictions[nrow(predictions) - 2, ], confidence_table))
     
     
     
