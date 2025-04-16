@@ -20,16 +20,6 @@ sunshine <- function(data, family = ""){
                      "#ff9900")
   
   
-  
-  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  # Shit code to throw away from function
-  
-  # -- Add Google Font
-  #font_add_google(name = "Lexend")
-  
-  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  
-  
   # -- filter out rows with sunshine NA
   data <- data[!is.na(data$sunshine), ]
   
