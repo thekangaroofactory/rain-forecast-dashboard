@@ -42,7 +42,7 @@ prediction_Server <- function(id, predictions, observations) {
     # -- input
     output$date_slider <- renderUI(
       div(style="display:inline-block",
-          sliderInput(inputId = ns("date_slider"),
+          sliderInput(inputId = ns("date_selection"),
                       label = "Date range:",
                       min = dataset_date_min,
                       max = dataset_date_max,
@@ -65,13 +65,13 @@ prediction_Server <- function(id, predictions, observations) {
     
     # -- all_years
     observeEvent(input$all_years,
-      updateSliderInput(inputId = "date_slider",
+      updateSliderInput(inputId = "date_selection",
                         value = c(dataset_date_min, dataset_date_max)))
     
     
     # -- this_year
     observeEvent(input$this_year,
-      updateSliderInput(inputId = "date_slider",
+      updateSliderInput(inputId = "date_selection",
                         value = c(as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")), dataset_date_max)))
     
     
@@ -79,10 +79,10 @@ prediction_Server <- function(id, predictions, observations) {
     observeEvent(input$previous_year, {
       
       # -- check 
-      req(input$date_slider[1] != dataset_date_min)
+      req(input$date_selection[1] != dataset_date_min)
       
       # -- remove 1 year
-      year <- lubridate::year(input$date_slider[1])
+      year <- lubridate::year(input$date_selection[1])
       if(year != lubridate::year(dataset_date_min))
         year <- year - 1
       
@@ -91,7 +91,7 @@ prediction_Server <- function(id, predictions, observations) {
       year_end <- as.Date(paste(year, "12-31", sep = "-"))
       
       # -- update input
-      updateSliderInput(inputId = "date_slider",
+      updateSliderInput(inputId = "date_selection",
                         value = c(year_start, year_end))})
     
     
@@ -99,10 +99,10 @@ prediction_Server <- function(id, predictions, observations) {
     observeEvent(input$next_year, {
       
       # -- check 
-      req(input$date_slider[1] != dataset_date_max)
+      req(input$date_selection[1] != dataset_date_max)
       
       # -- remove 1 year
-      year <- lubridate::year(input$date_slider[2])
+      year <- lubridate::year(input$date_selection[2])
       if(year != lubridate::year(dataset_date_max))
         year <- year + 1
       
@@ -111,7 +111,7 @@ prediction_Server <- function(id, predictions, observations) {
       year_end <- as.Date(paste(year, "12-31", sep = "-"))
       
       # -- update input
-      updateSliderInput(inputId = "date_slider",
+      updateSliderInput(inputId = "date_selection",
                         value = c(year_start, year_end))})
     
     
@@ -119,13 +119,13 @@ prediction_Server <- function(id, predictions, observations) {
     selected_predictions <- reactive({
       
       # -- check if input is initialized
-      req(input$date_slider)
+      req(input$date_selection)
       
       # -- filter
       pre <- predictions %>%
         filter(
-          date >= input$date_slider[1],
-          date <= input$date_slider[2])
+          date >= input$date_selection[1],
+          date <= input$date_selection[2])
       
       # -- store nb removed in next step
       nb_removed(sum(!pre$accurate %in% c(TRUE, FALSE)))
