@@ -38,6 +38,7 @@ page_navbar(
             
             # -- plots
             obs_radar_ui("obs"),
+            obs_rainfall_ui("obs"),
             obs_sunshine_ui("obs")),
   
   

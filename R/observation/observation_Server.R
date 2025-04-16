@@ -22,6 +22,7 @@ observation_Server <- function(id, observations) {
     # -- reactive objects
     benchmark_radar <- reactiveVal(NULL)
     benchmark_sunshine <- reactiveVal(NULL)
+    benchmark_rainfall <- reactiveVal(NULL)
     
     
     # -- compute dataset stats
@@ -202,6 +203,37 @@ observation_Server <- function(id, observations) {
         ts_after <- ktools::getTimestamp()
         benchmark_sunshine(as.numeric(ts_after - ts_before))
         cat("Sunshine computation time =", benchmark_sunshine(), "ms \n")
+        
+        # -- return
+        p}, 
+      
+      bg = "transparent")
+    
+    
+    # --------------------------------------------------------------------------
+    # Rainfall plot section
+    # --------------------------------------------------------------------------
+    
+    # -- benchmark
+    output$benchmark_rainfall <- renderText(benchmark_rainfall())
+    
+    # -- rainfall plot
+    output$p_rainfall <- renderPlot(
+      
+      # -- check data size
+      if(nrow(selected_observations()) > 0){
+        
+        # -- benchmark
+        ts_before <- ktools::getTimestamp()
+        
+        # -- build plot
+        p <- rainfall(selected_observations())
+        p <- p_copyright(p)
+        
+        # -- benchmark
+        ts_after <- ktools::getTimestamp()
+        benchmark_rainfall(as.numeric(ts_after - ts_before))
+        cat("Rainfall computation time =", benchmark_rainfall(), "ms \n")
         
         # -- return
         p}, 

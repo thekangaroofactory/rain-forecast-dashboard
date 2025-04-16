@@ -172,11 +172,11 @@ rainfall <- function(data, family = ""){
 
       # -- backgrounds & grid
       
-      panel.background = element_rect(fill = "#2d3037"),
-      plot.background =  element_rect(fill = "#2d3037"),
+      #panel.background = element_rect(fill = "#2d3037"),
+      #plot.background =  element_rect(fill = "#2d3037"),
       
-      #panel.background = element_blank(),
-      #plot.background = element_blank(),
+      panel.background = element_blank(),
+      plot.background = element_blank(),
       panel.grid = element_blank(),
             
       # -- legend
