@@ -37,7 +37,6 @@ sunshine <- function(data, family = ""){
   stats <- data %>%
     group_by(month) %>%
     summarise(cumsum = sum(sunshine, na.rm = TRUE),
-              mean = mean(sunshine, na.rm = TRUE),
               median = median(sunshine, na.rm = TRUE)) %>%
     arrange(., -median) %>%
     mutate(name = month.name[month])
