@@ -3,12 +3,7 @@
 p_confidence <- function(predictions, spread = 0.1, n = 100){
   
   # -- data transformation
-  predictions$group <- floor(predictions$scaled_prediction * n) / n
-  
-  data <- predictions %>%
-    group_by(group) %>%
-    summarise(count = n(), 
-              accurate = sum(accurate, na.rm = T))
+  data <- confidence_rate(predictions, n = n)
   
   
   # -- init
