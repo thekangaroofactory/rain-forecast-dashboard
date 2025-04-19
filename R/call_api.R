@@ -20,6 +20,9 @@ call_api <- function(resource = "observations", station = "IDCJDW2124", start, e
       return(NULL)})
 
   # -- return
-  jsonlite::fromJSON(response)
+  if(!is.null(response))
+    jsonlite::fromJSON(response)
+  else
+    NULL
   
 }
