@@ -1,5 +1,5 @@
 
-p_accuracy_over_time <- function(predictions){
+p_accuracy_over_time <- function(predictions, theme = COLORS){
   
   # -- init
   ggplot(predictions,
@@ -9,7 +9,7 @@ p_accuracy_over_time <- function(predictions){
     geom_line(
       aes(
         y = cum_accuracy),
-      color = "orange") +
+      color = theme$p_warm) +
     
     geom_hline(
       aes(
@@ -21,7 +21,7 @@ p_accuracy_over_time <- function(predictions){
       data = predictions[predictions$accurate %in% c(TRUE, FALSE), ],
       aes(
         yend = ifelse(accurate, 0.1, -0.1) - 0.25,
-        color = ifelse(accurate, "orange", "cyan")),
+        color = ifelse(accurate, theme$p_warm, theme$p_cold)),
       y = -0.25,
       linewidth = 0.1) +
     

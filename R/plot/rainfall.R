@@ -10,7 +10,7 @@
 #' @examples
 
 
-rainfall <- function(data, family = ""){
+rainfall <- function(data, family = "", theme = COLORS){
 
   # -- params
   color_text <- "grey45"
@@ -137,7 +137,7 @@ rainfall <- function(data, family = ""){
                      yend = -maxvalue + maxvalue * (count / max(count) / 2)),
                  linewidth = 0.5,
                  lineend = "round",
-                 color = "orange",
+                 color = theme$p_warm,
                  alpha = .75) +
     
     # -- Legend: count (nb days with rain)

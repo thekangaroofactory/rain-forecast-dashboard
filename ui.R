@@ -14,10 +14,10 @@ page_navbar(
   
   # -- theme
   theme = bs_theme(
-    bg = "#2d3037",
-    fg = "#FFF",
-    primary = "orange",
-    secondary = "#ececec",
+    bg = COLORS$bg,
+    fg = COLORS$fg,
+    primary = COLORS$primary,
+    secondary = COLORS$secondary,
     base_font = font_google("Quicksand")),
   
   # -- title
