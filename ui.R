@@ -36,9 +36,15 @@ page_navbar(
             # -- select data
             obs_selection_ui("obs"),
             
-            # -- plots
+            # -- radar section
             obs_radar_ui("obs"),
+            
+            # -- rain section
+            obs_rain_section_ui("obs"),
             obs_rainfall_ui("obs"),
+            
+            # -- sunshine section
+            obs_sun_section_ui("obs"),
             obs_sunshine_ui("obs")),
   
   

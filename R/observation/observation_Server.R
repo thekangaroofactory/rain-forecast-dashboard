@@ -180,8 +180,14 @@ observation_Server <- function(id, observations) {
     
     
     # --------------------------------------------------------------------------
-    # Sunshine plot section
+    # Sunshine section
     # --------------------------------------------------------------------------
+    
+    # -- value boxes
+    output$sunshine_amount <- renderText(paste0(sum(selected_observations()$sunshine, na.rm = T), "h"))
+    output$sunshine_mean <- renderText(paste0(round(mean(selected_observations()$sunshine, na.rm = T), digits = 1), "h"))
+    output$sunshine_median <- renderText(paste0(round(median(selected_observations()$sunshine, na.rm = T), digits = 1), "h"))
+    
     
     # -- benchmark
     output$benchmark_sunshine <- renderText(benchmark_sunshine())
@@ -211,8 +217,14 @@ observation_Server <- function(id, observations) {
     
     
     # --------------------------------------------------------------------------
-    # Rainfall plot section
+    # Rainfall section
     # --------------------------------------------------------------------------
+    
+    # -- value boxes
+    output$rainfall_amount <- renderText(paste0(sum(selected_observations()$rain_fall, na.rm = T), "mm"))
+    output$rainfall_days <- renderText(sum(selected_observations()$rain_today, na.rm = T))
+    output$rainfall_days_rate <- renderText(paste0(round(sum(selected_observations()$rain_today, na.rm = T) / nrow(selected_observations()) * 100, digits = 0), "%"))
+    
     
     # -- benchmark
     output$benchmark_rainfall <- renderText(benchmark_rainfall())
