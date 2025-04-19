@@ -32,3 +32,14 @@ WS_BASE_ROUTE <- Sys.getenv("WS_BASE_ROUTE")
 for(nm in list.files("R", pattern = ".R", full.names = T, recursive = T))
   source(nm)
 rm(nm)
+
+
+# -- Define global colors
+COLORS <- list(bg = "#2d3037",
+               fg = "#FFF",
+               primary = "orange",
+               secondary = "#ececec",
+               p_warm = "orange",
+               p_cold = "cyan",
+               p_mid = "beige")
+

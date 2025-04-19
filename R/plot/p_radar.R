@@ -1,6 +1,6 @@
 
 
-radar <- function(observations){
+p_radar <- function(observations, theme = COLORS){
   
   # -- scale values (rainfall values are large compared to temp / sunshine)
   coeff_rainfall <- 10
@@ -111,7 +111,7 @@ radar <- function(observations){
     # -- median temperature
     geom_hline(
       yintercept = median_temp,
-      color = "beige",
+      color = theme$p_mid,
       alpha = 0.25,
       linewidth = 0.25) +
     
@@ -120,7 +120,7 @@ radar <- function(observations){
       aes(
         ymin = min_temp,
         ymax = max_temp),
-      fill = "beige",
+      fill = theme$p_mid,
       alpha = 0.25) +
     
     # -- min temperature
@@ -140,7 +140,7 @@ radar <- function(observations){
         label = paste(min_temp, "°C")),
       vjust = 0.5,
       size = 3,
-      color = "cyan",
+      color = theme$p_cold,
       alpha = 0.5) +
     
     # -- max temperature
@@ -161,11 +161,11 @@ radar <- function(observations){
         label = paste(max_temp, "°C")),
       vjust = 0.5,
       size = 3,
-      color = "orange",
+      color = theme$p_warm,
       alpha = 0.5) +
     
     # -- gradient stroke
-    scale_colour_gradient2(low = "cyan", mid = "beige" , high = "orange",
+    scale_colour_gradient2(low = theme$p_cold, mid = theme$p_mid , high = theme$p_warm,
                            midpoint = median(c(observations$min_temp, observations$max_temp), na.rm = T)) +
     
     # -- init new scale
@@ -183,7 +183,7 @@ radar <- function(observations){
         colour = rain_fall,
         alpha = rain_fall / max(rain_fall, na.rm = T)), 
       shape = 21,
-      fill = "cyan") +
+      fill = theme$p_cold) +
     
     # -- max rainfall
     # x gets an additional 15° & fixed y
@@ -195,7 +195,7 @@ radar <- function(observations){
       y = y_rainfall_legend,
       vjust = 0.5,
       size = 3,
-      color = "cyan",
+      color = theme$p_cold,
       alpha = 0.5) +
     
     # -- max rainfall tick
@@ -208,7 +208,7 @@ radar <- function(observations){
         yend = -rain_fall / coeff_rainfall + y_rainfall),
       y = y_rainfall_legend,
       linewidth = 0.5,
-      color = "cyan",
+      color = theme$p_cold,
       alpha = 0.25) +
   
     # -- scales (stroke around circle)
@@ -232,7 +232,7 @@ radar <- function(observations){
     # -- background line
     geom_hline(
       yintercept = y_cloud,
-      color = "beige",
+      color = theme$p_mid,
       alpha = 0.25,
       linewidth = 0.25) +
     
@@ -242,7 +242,7 @@ radar <- function(observations){
     # -- background line
     geom_hline(
       yintercept = y_sunshine,
-      color = "beige",
+      color = theme$p_mid,
       alpha = 0.25,
       linewidth = 0.25) +
   
@@ -276,12 +276,12 @@ radar <- function(observations){
         label = paste(sunshine, "h")),
       vjust = 0.5,
       size = 3,
-      color = "orange",
+      color = theme$p_warm,
       alpha = 0.5) +
     
     # -- color & fill scales
-    scale_fill_gradient(low = "transparent", high = "orange") +
-    scale_colour_gradient2(low = "grey", mid = "grey25" , high = "orange",
+    scale_fill_gradient(low = "transparent", high = theme$p_warm) +
+    scale_colour_gradient2(low = "grey", mid = "grey25" , high = theme$p_warm,
                            midpoint = median(observations$sunshine, na.rm = T)) +
   
     
@@ -328,4 +328,4 @@ radar <- function(observations){
     
 }
 
-#print(radar(observations_df))
+#print(p_radar(observations_df))

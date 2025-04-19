@@ -1,6 +1,6 @@
 
 
-sunshine <- function(data, family = ""){
+p_sunshine <- function(data, family = ""){
 
   # -- params
   color_text <- "grey45"
@@ -20,25 +20,13 @@ sunshine <- function(data, family = ""){
                      "#ff9900")
   
   
-  
-  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  # Shit code to throw away from function
-  
-  # -- Add Google Font
-  #font_add_google(name = "Lexend")
-  
-  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  
-  
   # -- filter out rows with sunshine NA
   data <- data[!is.na(data$sunshine), ]
   
   # -- build stats (to order)
   stats <- data %>%
     group_by(month) %>%
-    summarise(cumsum = sum(sunshine, na.rm = TRUE),
-              mean = mean(sunshine, na.rm = TRUE),
-              median = median(sunshine, na.rm = TRUE)) %>%
+    summarise(median = median(sunshine, na.rm = TRUE)) %>%
     arrange(., -median) %>%
     mutate(name = month.name[month])
   
@@ -160,4 +148,4 @@ sunshine <- function(data, family = ""){
   
 }
 
-#print(sunshine(observations_df))
+#print(p_sunshine(observations_df))

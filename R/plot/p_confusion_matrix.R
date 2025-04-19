@@ -1,6 +1,6 @@
 
 
-p_confusion_matrix <- function(c_mat){
+p_confusion_matrix <- function(c_mat, theme = COLORS){
   
   # -- nb predictions
   nb_pre <- sum(c_mat)
@@ -60,10 +60,8 @@ p_confusion_matrix <- function(c_mat){
       size = 4) +
     
     # -- fill & color
-    #scale_colour_gradient(low = "grey", high = "orange") +
-    #scale_fill_gradient(low = "grey", high = "orange") +
-    scale_colour_manual(values = c("good" = "orange", "bad" = "grey")) +
-    scale_fill_manual(values = c("good" = "orange", "bad" = "grey")) +
+    scale_colour_manual(values = c("good" = theme$p_warm, "bad" = "grey")) +
+    scale_fill_manual(values = c("good" = theme$p_warm, "bad" = "grey")) +
     
     # -- keep it 'squared'
     coord_fixed() +

@@ -1,14 +1,9 @@
 
 
-p_confidence <- function(predictions, spread = 0.1, n = 100){
+p_confidence <- function(predictions, spread = 0.1, n = 100, theme = COLORS){
   
   # -- data transformation
-  predictions$group <- floor(predictions$scaled_prediction * n) / n
-  
-  data <- predictions %>%
-    group_by(group) %>%
-    summarise(count = n(), 
-              accurate = sum(accurate, na.rm = T))
+  data <- confidence_rate(predictions, n = n)
   
   
   # -- init
@@ -25,7 +20,7 @@ p_confidence <- function(predictions, spread = 0.1, n = 100){
     geom_density(
       data = predictions,
       aes(x = scaled_prediction),
-      color = "orange",
+      color = theme$p_warm,
       fill = "grey",
       alpha = .15) +
     
@@ -53,7 +48,7 @@ p_confidence <- function(predictions, spread = 0.1, n = 100){
       alpha = 0.15) +
     
     # -- color scale
-    scale_color_gradient(low = "cyan", high = "orange") +
+    scale_color_gradient(low = theme$p_cold, high = theme$p_warm) +
     
     # -- y axis & labels
     scale_y_continuous(breaks = c(-spread, -(0.25 + spread), -(0.5 + spread), -(1 + spread)),

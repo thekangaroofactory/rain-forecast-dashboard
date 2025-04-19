@@ -22,6 +22,7 @@ observation_Server <- function(id, observations) {
     # -- reactive objects
     benchmark_radar <- reactiveVal(NULL)
     benchmark_sunshine <- reactiveVal(NULL)
+    benchmark_rainfall <- reactiveVal(NULL)
     
     
     # -- compute dataset stats
@@ -161,7 +162,7 @@ observation_Server <- function(id, observations) {
         ts_before <- ktools::getTimestamp()
         
         # -- build plot
-        p <- radar(selected_observations())
+        p <- p_radar(selected_observations())
         p <- p_copyright(p)
         
         # -- benchmark
@@ -172,15 +173,21 @@ observation_Server <- function(id, observations) {
         # -- return
         tryCatch(
           print(p),
-          error = function(e) default_p(message = "Failed to build the plot:\nthe date range is too short.",
+          error = function(e) p_default(message = "Failed to build the plot:\nthe date range is too short.",
                                         size = 4,
                                         color = "grey"))}, 
       bg = "transparent")
     
     
     # --------------------------------------------------------------------------
-    # Sunshine plot section
+    # Sunshine section
     # --------------------------------------------------------------------------
+    
+    # -- value boxes
+    output$sunshine_amount <- renderText(paste0(sum(selected_observations()$sunshine, na.rm = T), "h"))
+    output$sunshine_mean <- renderText(paste0(round(mean(selected_observations()$sunshine, na.rm = T), digits = 1), "h"))
+    output$sunshine_median <- renderText(paste0(round(median(selected_observations()$sunshine, na.rm = T), digits = 1), "h"))
+    
     
     # -- benchmark
     output$benchmark_sunshine <- renderText(benchmark_sunshine())
@@ -195,13 +202,50 @@ observation_Server <- function(id, observations) {
         ts_before <- ktools::getTimestamp()
         
         # -- build plot
-        p <- sunshine(selected_observations())
+        p <- p_sunshine(selected_observations())
         p <- p_copyright(p)
         
         # -- benchmark
         ts_after <- ktools::getTimestamp()
         benchmark_sunshine(as.numeric(ts_after - ts_before))
         cat("Sunshine computation time =", benchmark_sunshine(), "ms \n")
+        
+        # -- return
+        p}, 
+      
+      bg = "transparent")
+    
+    
+    # --------------------------------------------------------------------------
+    # Rainfall section
+    # --------------------------------------------------------------------------
+    
+    # -- value boxes
+    output$rainfall_amount <- renderText(paste0(sum(selected_observations()$rain_fall, na.rm = T), "mm"))
+    output$rainfall_days <- renderText(sum(selected_observations()$rain_today, na.rm = T))
+    output$rainfall_days_rate <- renderText(paste0(round(sum(selected_observations()$rain_today, na.rm = T) / nrow(selected_observations()) * 100, digits = 0), "%"))
+    
+    
+    # -- benchmark
+    output$benchmark_rainfall <- renderText(benchmark_rainfall())
+    
+    # -- rainfall plot
+    output$p_rainfall <- renderPlot(
+      
+      # -- check data size
+      if(nrow(selected_observations()) > 0){
+        
+        # -- benchmark
+        ts_before <- ktools::getTimestamp()
+        
+        # -- build plot
+        p <- p_rainfall(selected_observations())
+        p <- p_copyright(p)
+        
+        # -- benchmark
+        ts_after <- ktools::getTimestamp()
+        benchmark_rainfall(as.numeric(ts_after - ts_before))
+        cat("Rainfall computation time =", benchmark_rainfall(), "ms \n")
         
         # -- return
         p}, 

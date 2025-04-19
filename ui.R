@@ -14,10 +14,10 @@ page_navbar(
   
   # -- theme
   theme = bs_theme(
-    bg = "#2d3037",
-    fg = "#FFF",
-    primary = "orange",
-    secondary = "#ececec",
+    bg = COLORS$bg,
+    fg = COLORS$fg,
+    primary = COLORS$primary,
+    secondary = COLORS$secondary,
     base_font = font_google("Quicksand")),
   
   # -- title
@@ -36,8 +36,15 @@ page_navbar(
             # -- select data
             obs_selection_ui("obs"),
             
-            # -- plots
+            # -- radar section
             obs_radar_ui("obs"),
+            
+            # -- rain section
+            obs_rain_section_ui("obs"),
+            obs_rainfall_ui("obs"),
+            
+            # -- sunshine section
+            obs_sun_section_ui("obs"),
             obs_sunshine_ui("obs")),
   
   
