@@ -5,7 +5,6 @@ prediction_card <- function(prediction, confidence_table){
   # -- prepare values
   chance_of_rain <- round(prediction$scaled_prediction * 100)
   confidence <- round(confidence_table[confidence_table$group == floor(prediction$scaled_prediction * 100) / 100, ]$confidence * 100)
-  confidence <- confidence[!is.na(confidence)]
   
   # -- compute confusion status
   c_mat <- confusion_matrix(prediction) == 1
