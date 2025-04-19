@@ -1,6 +1,6 @@
 
 
-radar <- function(observations, theme = COLORS){
+p_radar <- function(observations, theme = COLORS){
   
   # -- scale values (rainfall values are large compared to temp / sunshine)
   coeff_rainfall <- 10
@@ -328,4 +328,4 @@ radar <- function(observations, theme = COLORS){
     
 }
 
-#print(radar(observations_df))
+#print(p_radar(observations_df))

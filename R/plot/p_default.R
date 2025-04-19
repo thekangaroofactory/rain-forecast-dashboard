@@ -1,7 +1,7 @@
 
 
 
-default_p <- function(message = "Failed to build the plot.", size = 6, color = "red"){
+p_default <- function(message = "Failed to build the plot.", size = 6, color = "red"){
   
   # -- init
   ggplot() +

@@ -1,6 +1,6 @@
 
 
-sunshine <- function(data, family = ""){
+p_sunshine <- function(data, family = ""){
 
   # -- params
   color_text <- "grey45"
@@ -148,4 +148,4 @@ sunshine <- function(data, family = ""){
   
 }
 
-#print(sunshine(observations_df))
+#print(p_sunshine(observations_df))

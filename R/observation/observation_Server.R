@@ -162,7 +162,7 @@ observation_Server <- function(id, observations) {
         ts_before <- ktools::getTimestamp()
         
         # -- build plot
-        p <- radar(selected_observations())
+        p <- p_radar(selected_observations())
         p <- p_copyright(p)
         
         # -- benchmark
@@ -173,7 +173,7 @@ observation_Server <- function(id, observations) {
         # -- return
         tryCatch(
           print(p),
-          error = function(e) default_p(message = "Failed to build the plot:\nthe date range is too short.",
+          error = function(e) p_default(message = "Failed to build the plot:\nthe date range is too short.",
                                         size = 4,
                                         color = "grey"))}, 
       bg = "transparent")
@@ -196,7 +196,7 @@ observation_Server <- function(id, observations) {
         ts_before <- ktools::getTimestamp()
         
         # -- build plot
-        p <- sunshine(selected_observations())
+        p <- p_sunshine(selected_observations())
         p <- p_copyright(p)
         
         # -- benchmark
@@ -227,7 +227,7 @@ observation_Server <- function(id, observations) {
         ts_before <- ktools::getTimestamp()
         
         # -- build plot
-        p <- rainfall(selected_observations())
+        p <- p_rainfall(selected_observations())
         p <- p_copyright(p)
         
         # -- benchmark

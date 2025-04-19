@@ -10,7 +10,7 @@
 #' @examples
 
 
-rainfall <- function(data, family = "", theme = COLORS){
+p_rainfall <- function(data, family = "", theme = COLORS){
 
   # -- params
   color_text <- "grey45"
