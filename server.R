@@ -39,12 +39,20 @@ function(input, output, session) {
   if(!is.null(predictions))
     predictions <- pre_datamart(predictions, observations)
   
+  # -- debug
+  if(DEBUG)
+    predictions_df <<- predictions
+  
   
   # ----------------------------------------------------------------------------
   # Start module servers
   
   # -- observation server
-  observation_Server(id = "obs", observations)
-  prediction_Server(id = "pre", predictions, observations)
+  if(!is.null(observations))
+    observation_Server(id = "obs", observations)
+  
+  # -- prediction server
+  if(!is.null(observations) && !is.null(predictions))
+    prediction_Server(id = "pre", predictions, observations)
   
 }
