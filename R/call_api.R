@@ -14,17 +14,24 @@ call_api <- function(resource = "observations", station = "IDCJDW2124", start, e
   tryCatch({
     
     # -- try to call API
-    response <- RCurl::getURL(api_url)
+    response <- RCurl::getURL(api_url, httpheader = c(Accept = "application/json", "X-API-KEY" = Sys.getenv("API_KEY")))
     cat("API call response size =", object.size(response) ,"\n")
     
-    },
     
-    # -- error management
-    error = function(e) {
+    # -- skip if error
+    if(!is.null(response)){
       
-      cat("[WARNING] An error has been catched: \n")
-      message(e$message)})
-
+      if(DEBUG)      
+        DEBUG_response <<- response
+      
+      # -- check 401 feedback
+      if(grepl("Unauthorized", response)){
+        message("[WARNING] API Authentication failed (code 401) -- Check API key")
+        response <- NULL}}
+    
+  })
+  
+  
   # -- return
   if(!is.null(response))
     jsonlite::fromJSON(response)
