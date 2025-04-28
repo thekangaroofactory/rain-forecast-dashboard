@@ -12,12 +12,18 @@ call_api <- function(resource = "observations", station = "IDCJDW2124", start, e
   
   # -- call api
   tryCatch({
-    response <- RCurl::getURL(api_url)
-    cat("API call response size =", object.size(response) ,"\n")},
     
+    # -- try to call API
+    response <- RCurl::getURL(api_url)
+    cat("API call response size =", object.size(response) ,"\n")
+    
+    },
+    
+    # -- error management
     error = function(e) {
-      message(e$message)
-      return(NULL)})
+      
+      cat("[WARNING] An error has been catched: \n")
+      message(e$message)})
 
   # -- return
   if(!is.null(response))
