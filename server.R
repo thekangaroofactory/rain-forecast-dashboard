@@ -27,7 +27,7 @@ function(input, output, session) {
     showModal(
       modalDialog(
         title = "Data Error",
-        p("The was a problem while retrieving the data from the database."),
+        p("There was a problem while retrieving the data from the database."),
         p("All values & plots will be empty.")))
   
   # -- debug
