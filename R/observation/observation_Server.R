@@ -20,9 +20,9 @@ observation_Server <- function(id, observations) {
     
     
     # -- reactive objects
-    benchmark_radar <- reactiveVal(NULL)
-    benchmark_sunshine <- reactiveVal(NULL)
-    benchmark_rainfall <- reactiveVal(NULL)
+    benchmark_radar <- reactiveVal(0)
+    benchmark_sunshine <- reactiveVal(0)
+    benchmark_rainfall <- reactiveVal(0)
     
     
     # -- compute dataset stats
@@ -153,7 +153,7 @@ observation_Server <- function(id, observations) {
     output$benchmark_radar <- renderText(benchmark_radar())
     
     # -- radar plot
-    output$p_radar <- renderPlot(
+    output$p_radar <- renderCachedPlot(
       
       # -- check data size
       if(nrow(selected_observations()) > 0){
@@ -176,6 +176,8 @@ observation_Server <- function(id, observations) {
           error = function(e) p_default(message = "Failed to build the plot:\nthe date range is too short.",
                                         size = 4,
                                         color = "grey"))}, 
+      
+      cacheKeyExpr = {list(input$date_slider)},
       bg = "transparent")
     
     
@@ -193,7 +195,7 @@ observation_Server <- function(id, observations) {
     output$benchmark_sunshine <- renderText(benchmark_sunshine())
     
     # -- sunshine plot
-    output$p_sunshine <- renderPlot(
+    output$p_sunshine <- renderCachedPlot(
       
       # -- check data size
       if(nrow(selected_observations()) > 0){
@@ -213,6 +215,7 @@ observation_Server <- function(id, observations) {
         # -- return
         p}, 
       
+      cacheKeyExpr = {list(input$date_slider)},
       bg = "transparent")
     
     
@@ -230,7 +233,7 @@ observation_Server <- function(id, observations) {
     output$benchmark_rainfall <- renderText(benchmark_rainfall())
     
     # -- rainfall plot
-    output$p_rainfall <- renderPlot(
+    output$p_rainfall <- renderCachedPlot(
       
       # -- check data size
       if(nrow(selected_observations()) > 0){
@@ -250,6 +253,7 @@ observation_Server <- function(id, observations) {
         # -- return
         p}, 
       
+      cacheKeyExpr = {list(input$date_slider)},
       bg = "transparent")
     
   })
