@@ -220,8 +220,10 @@ p_radar <- function(observations, theme = COLORS){
     
     # -- cloud -----------------------------------------------------------------
 
-    # -- cloud  
+    # -- cloud
+    # secure against NA in second row (plot will fail to render) #47
     geom_ribbon(
+      data = if(is.na(observations[2, "cloud_3pm"])) observations[-2, ] else observations,
       aes(
         ymin = y_cloud - cloud_9am / 2,
         ymax = y_cloud + cloud_3pm / 2),
