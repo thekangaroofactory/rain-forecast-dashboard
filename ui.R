@@ -7,7 +7,7 @@
 page_navbar(
   
   fillable = FALSE,
-  footer = p(style = "font-size:9pt;margin-top:20px;", "© 2025 Philippe Peret"),
+  footer = p(style = "font-size:9pt;margin-top:20px;", paste("© 2026 Philippe Peret", "| version", APP_VERSION)),
   
   # -- header / css
   header = tags$link(rel = "stylesheet", type = "text/css", href = "./css/rain_forecast.css"),
