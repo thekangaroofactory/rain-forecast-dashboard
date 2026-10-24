@@ -1,4 +1,6 @@
 
+# -- Version
+APP_VERSION <- "1.0.4"
 
 # -- Load dependencies
 library(shiny)

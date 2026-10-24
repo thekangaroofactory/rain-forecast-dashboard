@@ -173,9 +173,12 @@ observation_Server <- function(id, observations) {
         # -- return
         tryCatch(
           print(p),
-          error = function(e) p_default(message = "Failed to build the plot:\nthe date range is too short.",
-                                        size = 4,
-                                        color = "grey"))}, 
+          error = function(e) {
+            warning("The following error has been catched in p_radar output:")
+            warning(e$message)
+            p_default(message = "Failed to build the plot:\na possible reason is when date range is too short.",
+                      size = 4,
+                      color = "grey")})},
       
       cacheKeyExpr = {list(input$date_slider)},
       bg = "transparent")

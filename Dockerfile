@@ -3,8 +3,8 @@
 FROM rocker/shiny
 
 # -- system libraries
-# RUN apt-get update && apt-get install -y \
-# libcurl4-gnutls-dev
+RUN apt-get update && apt-get install -y \
+libuv1-dev
 
 # -- Install R dependencies
 # Shiny is already included in base image
