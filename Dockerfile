@@ -9,7 +9,7 @@ libuv1-dev
 # -- Install R dependencies
 # Shiny is already included in base image
 # remotes needed at next step
-RUN R -e "install.packages(c('remotes', 'RCurl', 'bslib', 'dplyr', 'ggplot2', 'ggforce', 'ggnewscale', 'geomtextpath', 'see', 'showtext'))"
+RUN R -e "install.packages(c('remotes', 'RCurl', 'bslib', 'dplyr', 'ggplot2', 'ggforce', 'ggnewscale', 'geomtextpath', 'see', 'ggdist', 'showtext'))"
 
 # -- Install dependencies from GitHub
 RUN R -e 'remotes::install_github("thekangaroofactory/ktools")'
